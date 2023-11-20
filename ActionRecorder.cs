@@ -1,5 +1,4 @@
-﻿using NTDLS.Persistence;
-using static MacroBot.RepeatableAction;
+﻿using static MacroBot.RepeatableAction;
 using static MacroBot.Win32s;
 
 namespace MacroBot

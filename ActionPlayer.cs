@@ -14,14 +14,14 @@ namespace MacroBot
         public event StateChanged? OnStarted;
         public event StateChanged? OnStopped;
 
-        public bool Start()
+        public bool Start(PersistedRecording recording)
         {
             if (IsRunning)
             {
                 return false;
             }
 
-            _recordedActions = ApplicationData.LoadFromDisk("MacroBot", new List<RepeatableAction>());
+            _recordedActions = recording.Actions;
 
             IsRunning = true;
             OnStarted?.Invoke(this);

@@ -1,5 +1,4 @@
 using NTDLS.Persistence;
-using System.Collections.Generic;
 
 namespace MacroBot
 {
@@ -23,11 +22,48 @@ namespace MacroBot
                 SaveRecordings();
             };
 
+            listViewHistory.ItemChecked += ListViewHistory_ItemChecked;
+            listViewHistory.KeyUp += ListViewHistory_KeyUp;
+
             LoadRecordings();
             ToggleFormVisualStates();
             _actionPlayer.OnStopped += _actionPlayer_OnStopped;
         }
 
+        private void ListViewHistory_KeyUp(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                if (listViewHistory.SelectedItems.Count > 0)
+                {
+                    var item = listViewHistory.SelectedItems[0];
+
+                    if (MessageBox.Show($"Delete the recording '{item.Text}'", "MacroBot", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                    {
+                        return;
+                    }
+                    listViewHistory.Items.Remove(item);
+
+                    SaveRecordings();
+                }
+            }
+        }
+
+        private void ListViewHistory_ItemChecked(object? sender, ItemCheckedEventArgs e)
+        {
+            if (e.Item.Checked == false)
+            {
+                return;
+            }
+
+            foreach (ListViewItem item in listViewHistory.Items)
+            {
+                if (item.Index != e.Item.Index)
+                {
+                    item.Checked = false;
+                }
+            }
+        }
 
         private void _actionPlayer_OnStopped(ActionPlayer sender)
         {
@@ -101,7 +137,7 @@ namespace MacroBot
                 Actions = _actionRecorder.Actions
             };
 
-            var item = new ListViewItem(new string[] { recording.Name, recording.SafeDateTimeName() });
+            var item = new ListViewItem(new string[] { recording.Name, recording.SafeDateTimeName });
             listViewHistory.Items.Add(item).Tag = recording;
 
             SaveRecordings();
@@ -118,6 +154,7 @@ namespace MacroBot
                 var rowPersist = (PersistedRecording?)item.Tag;
                 if (rowPersist != null)
                 {
+                    rowPersist.Selected = item.Checked;
                     rowPersist.Name = item.Text;
                     recordings.Add(rowPersist);
                 }
@@ -132,14 +169,33 @@ namespace MacroBot
 
             foreach (var recording in recordings)
             {
-                var item = new ListViewItem(new string[] { recording.Name, recording.SafeDateTimeName() });
+                var item = new ListViewItem(new string[] { recording.Name, recording.SafeDateTimeName });
                 listViewHistory.Items.Add(item).Tag = recording;
+                item.Checked = recording.Selected;
             }
         }
 
+        private PersistedRecording? GetSelectedRecording()
+        {
+            foreach (ListViewItem item in listViewHistory.Items)
+            {
+                if (item.Checked)
+                {
+                    return (PersistedRecording?)item.Tag;
+                }
+            }
+
+            return null;
+        }
+
+
         private void StartPlay()
         {
-            _actionPlayer.Start();
+            var recording = GetSelectedRecording();
+            if (recording != null)
+            {
+                _actionPlayer.Start(recording);
+            }
             ToggleFormVisualStates();
         }
 

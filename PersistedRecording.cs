@@ -2,18 +2,11 @@
 {
     internal class PersistedRecording
     {
+        public bool Selected { get; set; }
         public string Name { get; set; } = string.Empty;
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         public List<RepeatableAction> Actions { get; set; } = new();
-
-        public string SafeDateTimeName()
-        {
-            if (CreatedDate == null)
-            {
-                return "";
-            }
-            var dateTime = (DateTime)CreatedDate;
-            return dateTime.ToShortDateString().Replace("/", ".") + " " + dateTime.ToShortTimeString().Replace(":", ".");
-        }
+        public string SafeDateTimeName
+            => CreatedDate.ToShortDateString().Replace("/", ".") + " " + CreatedDate.ToShortTimeString().Replace(":", ".");
     }
 }

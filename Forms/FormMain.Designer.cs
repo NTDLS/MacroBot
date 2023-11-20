@@ -119,6 +119,7 @@
             // 
             // listViewHistory
             // 
+            listViewHistory.CheckBoxes = true;
             listViewHistory.Columns.AddRange(new ColumnHeader[] { columnHeaderName, columnHeaderDate });
             listViewHistory.FullRowSelect = true;
             listViewHistory.GridLines = true;
