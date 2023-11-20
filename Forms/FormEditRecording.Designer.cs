@@ -124,6 +124,7 @@
             Controls.Add(labelActions);
             Controls.Add(labelSpeed);
             Controls.Add(labelName);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;

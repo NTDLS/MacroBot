@@ -18,7 +18,7 @@
  MinVersion                      = 6.2
  ArchitecturesInstallIn64BitMode = x64
  ArchitecturesAllowed            = x86 x64
- OutputBaseFilename              = {#ApplicationName} Client {#ApplicationVersion}
+ OutputBaseFilename              = {#ApplicationName} {#ApplicationVersion}
  
 ;-- Windows 2000+ Support Dialog
  AppPublisher    = {#CompanyName}
@@ -34,9 +34,8 @@
 ;---------------------------------------------------------------------
 
 [Icons]
- Name: "{group}\Configure {#ApplicationName}"; Filename: "{app}\DIS.ClientConfiguration.exe";
- Name: "{group}\Update {#ApplicationName}";    Filename: "{app}\AutoUpdate.Exe"; WorkingDir: "{app}";
-
+ Name: "{group}\{#ApplicationName}"; Filename: "{app}\MacroBot.exe";
+ 
 ;---------------------------------------------------------------------
 
 [Run]
