@@ -1,3 +1,4 @@
+using MacroBot.Forms;
 using MacroBot.Hooks;
 using MacroBot.Recording;
 using MacroBot.Win32;
@@ -41,7 +42,18 @@ namespace MacroBot
             _isGridPopulating = true;
             if (e.Button == MouseButtons.Left && e.Clicks == 2 && listViewHistory.SelectedItems.Count == 1)
             {
-                listViewHistory.SelectedItems[0].Checked = !listViewHistory.SelectedItems[0].Checked;
+                var clickedItem = listViewHistory.SelectedItems[0];
+                var recording = (PersistedRecording?)clickedItem.Tag;
+                if (recording != null)
+                {
+                    using var form = new FormEditRecording(recording);
+                    if (form.ShowDialog() == DialogResult.OK && form.Recording != null)
+                    {
+                        clickedItem.Text = form.Recording.Name;
+                        clickedItem.Tag = form.Recording;
+                        SaveRecordings();
+                    }
+                }
             }
             _isGridPopulating = false;
         }
@@ -206,7 +218,7 @@ namespace MacroBot
                 item.Checked = recording.Selected;
             }
             _isGridPopulating = false;
-                }
+        }
 
         private PersistedRecording? GetSelectedRecording()
         {
