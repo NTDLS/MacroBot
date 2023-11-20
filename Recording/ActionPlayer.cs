@@ -48,9 +48,9 @@ namespace MacroBot.Recording
             return true;
         }
 
-        private bool AbortableSleep(int delayMs)
+        private bool AbortableSleep(int delayMs, double factor)
         {
-            //delayMs /= 2;
+            delayMs = (int)(delayMs / factor);
 
             var startTime = DateTime.Now;
 
@@ -76,31 +76,31 @@ namespace MacroBot.Recording
                 switch (action.ActionType)
                 {
                     case RepeatableAction.ActionTypes.MouseMove:
-                        SetCursorPos(action.MouseX, action.MouseY);
+                        SetCursorPos(action.MouseX ?? 0, action.MouseY ?? 0);
                         break;
-                    case RepeatableAction.ActionTypes.MouseLeftDown:
-                        SendLeftMouseDown();
+                    case RepeatableAction.ActionTypes.MouseLeftButton:
+                        if (action.Disposition == Win32.ButtonDisposition.Down)
+                            SendLeftMouseDown();
+                        else SendLeftMouseUp();
                         break;
-                    case RepeatableAction.ActionTypes.MouseLeftUp:
-                        SendLeftMouseUp();
+                    case RepeatableAction.ActionTypes.MouseRightButton:
+                        if (action.Disposition == Win32.ButtonDisposition.Down)
+                            SendRightMouseDown();
+                        else SendRightMouseUp();
                         break;
-                    case RepeatableAction.ActionTypes.MouseRightDown:
-                        SendRightMouseDown();
-                        break;
-                    case RepeatableAction.ActionTypes.MouseRightUp:
-                        SendRightMouseUp();
-                        break;
-                    case RepeatableAction.ActionTypes.KeyDown:
-                        SendKey(action.Key, true);
-                        break;
-                    case RepeatableAction.ActionTypes.KeyUp:
-                        SendKey(action.Key, false);
+                    case RepeatableAction.ActionTypes.Keyboard:
+                        if (action.Key != null)
+                        {
+                            if (action.Disposition == Win32.ButtonDisposition.Down)
+                                SendKey((Keys)action.Key, false);
+                            else SendKey((Keys)action.Key, true);
+                        }
                         break;
                 }
 
                 if (i < _recordedActions.Count - 1)
                 {
-                    AbortableSleep(_recordedActions[i + 1].DeltaMilliseconds);
+                    AbortableSleep(_recordedActions[i + 1].DeltaMilliseconds, 1);
                 }
             }
 

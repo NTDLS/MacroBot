@@ -7,7 +7,7 @@ namespace MacroBot.Recording
 {
     internal class ActionRecorder
     {
-        private System.Windows.Forms.Timer _recordTimer = new();
+        private readonly System.Windows.Forms.Timer _recordTimer = new();
         private int _lastMouseX = -1;
         private int _lastMouseY = -1;
         private DateTime? lastRecordedDateTime = null;
@@ -39,8 +39,8 @@ namespace MacroBot.Recording
 
             if (action.ActionType == ActionTypes.MouseMove)
             {
-                _lastMouseX = action.MouseX;
-                _lastMouseY = action.MouseY;
+                _lastMouseX = action.MouseX ?? 0;
+                _lastMouseY = action.MouseY ?? 0;
             }
         }
 
@@ -61,29 +61,11 @@ namespace MacroBot.Recording
 
             MouseHook.Install((o, mouseButtonDisposition) =>
             {
-                ActionTypes actionType;
-
-                if (mouseButtonDisposition == ButtonDisposition.Up)
-                {
-                    actionType = o.Button == MouseButtons.Left ? ActionTypes.MouseLeftUp : ActionTypes.MouseRightUp;
-                }
-                else if (mouseButtonDisposition == ButtonDisposition.Down)
-                {
-                    actionType = o.Button == MouseButtons.Left ? ActionTypes.MouseLeftDown : ActionTypes.MouseRightDown;
-                }
-                else
-                {
-                    return;
-                }
-
                 AddRecordedAction(new RepeatableAction()
                 {
-                    MouseX = o.X,
-                    MouseY = o.Y,
-                    ActionType = actionType
+                    Disposition = mouseButtonDisposition,
+                    ActionType = o.Button == MouseButtons.Left ? ActionTypes.MouseLeftButton : ActionTypes.MouseRightButton
                 });
-
-                //Debug.WriteLine($"Mouse {mouseButtonDisposition} at: X={o.X}, Y={o.Y}");
             });
 
             _recordTimer.Interval = 10;
@@ -98,8 +80,6 @@ namespace MacroBot.Recording
                         MouseY = cursorPos.Y,
                         ActionType = ActionTypes.MouseMove
                     });
-
-                    //Debug.WriteLine($"Mouse cursor position: X={cursorPos.X}, Y={cursorPos.Y}");
                 }
             };
             _recordTimer.Start();
@@ -108,12 +88,11 @@ namespace MacroBot.Recording
 
         private void KeyboardHook_OnKeyboardEventInterceptor(Keys key, ButtonDisposition keyboardButtonDirection)
         {
-            ActionTypes actionType = keyboardButtonDirection == ButtonDisposition.Up ? ActionTypes.KeyUp : ActionTypes.KeyDown;
-
             AddRecordedAction(new RepeatableAction()
             {
+                Disposition = keyboardButtonDirection,
                 Key = key,
-                ActionType = actionType
+                ActionType = ActionTypes.Keyboard
             });
         }
 

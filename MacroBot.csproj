@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NTDLS.Persistence" Version="1.0.1" />
+    <PackageReference Include="NTDLS.Persistence" Version="1.0.2" />
   </ItemGroup>
 
   <ItemGroup>

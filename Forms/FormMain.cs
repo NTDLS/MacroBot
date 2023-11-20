@@ -1,6 +1,7 @@
 using MacroBot.Hooks;
 using MacroBot.Recording;
 using MacroBot.Win32;
+using Newtonsoft.Json;
 using NTDLS.Persistence;
 
 namespace MacroBot
@@ -164,7 +165,13 @@ namespace MacroBot
                 }
             }
 
-            ApplicationData.SaveToDisk("MacroBot", recordings);
+            var settings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                Formatting = Formatting.Indented,
+            };
+
+            ApplicationData.SaveToDisk("MacroBot", recordings, settings);
         }
 
         private void LoadRecordings()
