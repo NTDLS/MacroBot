@@ -1,4 +1,4 @@
-﻿namespace MacroBot
+﻿namespace MacroBot.Recording
 {
     internal class RepeatableAction
     {

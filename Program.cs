@@ -1,3 +1,5 @@
+using MacroBot.Hooks;
+
 namespace MacroBot
 {
     internal static class Program

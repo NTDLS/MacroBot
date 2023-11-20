@@ -1,3 +1,6 @@
+using MacroBot.Hooks;
+using MacroBot.Recording;
+using MacroBot.Win32;
 using NTDLS.Persistence;
 
 namespace MacroBot
@@ -27,7 +30,7 @@ namespace MacroBot
 
             LoadRecordings();
             ToggleFormVisualStates();
-            _actionPlayer.OnStopped += _actionPlayer_OnStopped;
+            _actionPlayer.OnStopped += ActionPlayer_OnStopped;
         }
 
         private void ListViewHistory_KeyUp(object? sender, KeyEventArgs e)
@@ -65,20 +68,20 @@ namespace MacroBot
             }
         }
 
-        private void _actionPlayer_OnStopped(ActionPlayer sender)
+        private void ActionPlayer_OnStopped(ActionPlayer sender)
         {
             if (InvokeRequired)
             {
-                Invoke(() => _actionPlayer_OnStopped(sender));
+                Invoke(() => ActionPlayer_OnStopped(sender));
                 return;
             }
 
             ToggleFormVisualStates();
         }
 
-        private void KeyboardHook_OnKeyboardEventInterceptor(Keys key, Win32s.ButtonDisposition keyboardButtonDirection)
+        private void KeyboardHook_OnKeyboardEventInterceptor(Keys key, ButtonDisposition keyboardButtonDirection)
         {
-            if (key == Keys.F6 && keyboardButtonDirection == Win32s.ButtonDisposition.Up)
+            if (key == Keys.F6 && keyboardButtonDirection == ButtonDisposition.Up)
             {
                 if (_actionPlayer.IsRunning)
                 {
@@ -91,7 +94,7 @@ namespace MacroBot
                 else StartRecord();
 
             }
-            else if (key == Keys.F7 && keyboardButtonDirection == Win32s.ButtonDisposition.Up)
+            else if (key == Keys.F7 && keyboardButtonDirection == ButtonDisposition.Up)
             {
                 if (_actionRecorder.IsRunning)
                 {

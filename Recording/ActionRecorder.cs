@@ -1,7 +1,9 @@
-﻿using static MacroBot.RepeatableAction;
-using static MacroBot.Win32s;
+﻿using MacroBot.Hooks;
+using MacroBot.Win32;
+using static MacroBot.Recording.RepeatableAction;
+using static MacroBot.Win32.Extern;
 
-namespace MacroBot
+namespace MacroBot.Recording
 {
     internal class ActionRecorder
     {

@@ -1,7 +1,8 @@
-﻿using System.Runtime.InteropServices;
-using static MacroBot.Win32s;
+﻿using MacroBot.Win32;
+using System.Runtime.InteropServices;
+using static MacroBot.Win32.Extern;
 
-namespace MacroBot
+namespace MacroBot.Hooks
 {
     internal class KeyboardHook
     {
@@ -9,7 +10,7 @@ namespace MacroBot
         private const int WM_KEYUP = 0x0101;
 
         private static LowLevelKeyboardProc _proc = HookCallback;
-        private static IntPtr _hookID = IntPtr.Zero;
+        private static nint _hookID = nint.Zero;
         public static event KeyboardEventInterceptor? OnKeyboardEventInterceptor;
 
         public static void Install()
@@ -22,13 +23,13 @@ namespace MacroBot
             UnhookWindowsHookEx(_hookID);
         }
 
-        private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        private static nint HookCallback(int nCode, nint wParam, nint lParam)
         {
             if (nCode >= 0 && (wParam == WM_KEYDOWN || wParam == WM_KEYUP))
             {
                 int vkCode = Marshal.ReadInt32(lParam);
 
-                var keyDisposition = (wParam == WM_KEYDOWN) ? ButtonDisposition.Down : ButtonDisposition.Up;
+                var keyDisposition = wParam == WM_KEYDOWN ? ButtonDisposition.Down : ButtonDisposition.Up;
 
                 OnKeyboardEventInterceptor?.Invoke((Keys)vkCode, keyDisposition);
             }

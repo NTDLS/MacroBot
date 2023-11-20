@@ -1,11 +1,12 @@
-﻿using static MacroBot.Win32s;
+﻿using MacroBot.Win32;
+using static MacroBot.Win32.Extern;
 
-namespace MacroBot
+namespace MacroBot.Hooks
 {
     internal class MouseHook
     {
         private static readonly LowLevelMouseProc _proc = HookCallback;
-        private static IntPtr _hookID = IntPtr.Zero;
+        private static nint _hookID = nint.Zero;
 
         private static MouseEventInterceptor? _handlerProc;
 
@@ -20,7 +21,7 @@ namespace MacroBot
             UnhookWindowsHookEx(_hookID);
         }
 
-        private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        private static nint HookCallback(int nCode, nint wParam, nint lParam)
         {
             if (_handlerProc == null)
             {

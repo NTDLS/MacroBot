@@ -1,7 +1,6 @@
-﻿using NTDLS.Persistence;
-using static MacroBot.Win32s;
+﻿using static MacroBot.Win32.Extern;
 
-namespace MacroBot
+namespace MacroBot.Recording
 {
     internal class ActionPlayer
     {
@@ -77,7 +76,7 @@ namespace MacroBot
                 switch (action.ActionType)
                 {
                     case RepeatableAction.ActionTypes.MouseMove:
-                        Win32s.SetCursorPos(action.MouseX, action.MouseY);
+                        SetCursorPos(action.MouseX, action.MouseY);
                         break;
                     case RepeatableAction.ActionTypes.MouseLeftDown:
                         SendLeftMouseDown();
@@ -92,7 +91,6 @@ namespace MacroBot
                         SendRightMouseUp();
                         break;
                     case RepeatableAction.ActionTypes.KeyDown:
-
                         SendKey(action.Key, true);
                         break;
                     case RepeatableAction.ActionTypes.KeyUp:
