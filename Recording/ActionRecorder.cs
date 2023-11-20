@@ -27,11 +27,11 @@ namespace MacroBot.Recording
 
             if (lastRecordedDateTime == null)
             {
-                action.DeltaMilliseconds = 0;
+                action.DelayMilliseconds = 0;
             }
             else
             {
-                action.DeltaMilliseconds = (int)(DateTime.Now - (DateTime)lastRecordedDateTime).TotalMilliseconds; ;
+                action.DelayMilliseconds = (int)(DateTime.Now - (DateTime)lastRecordedDateTime).TotalMilliseconds; ;
             }
 
             Actions.Add(action);

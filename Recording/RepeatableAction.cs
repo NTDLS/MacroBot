@@ -15,7 +15,7 @@ namespace MacroBot.Recording
             Keyboard
         }
 
-        public int DeltaMilliseconds { get; set; }
+        public int DelayMilliseconds { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         public Keys? Key { get; set; }
