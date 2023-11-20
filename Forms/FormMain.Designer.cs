@@ -39,26 +39,32 @@
             listViewHistory = new ListView();
             columnHeaderName = new ColumnHeader();
             columnHeaderDate = new ColumnHeader();
+            menuStrip1 = new MenuStrip();
+            helpToolStripMenuItem = new ToolStripMenuItem();
+            aboutToolStripMenuItem = new ToolStripMenuItem();
+            fileToolStripMenuItem = new ToolStripMenuItem();
+            exitToolStripMenuItem = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).BeginInit();
             groupBoxControls.SuspendLayout();
             groupBoxHistory.SuspendLayout();
+            menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // buttonRecord
             // 
             buttonRecord.Location = new Point(6, 32);
             buttonRecord.Name = "buttonRecord";
-            buttonRecord.Size = new Size(77, 27);
+            buttonRecord.Size = new Size(79, 27);
             buttonRecord.TabIndex = 0;
-            buttonRecord.Text = "Record";
+            buttonRecord.Text = "Record (F6)";
             buttonRecord.UseVisualStyleBackColor = true;
             buttonRecord.Click += buttonRecord_Click;
             // 
             // buttonStopRecord
             // 
-            buttonStopRecord.Location = new Point(89, 32);
+            buttonStopRecord.Location = new Point(90, 32);
             buttonStopRecord.Name = "buttonStopRecord";
-            buttonStopRecord.Size = new Size(77, 27);
+            buttonStopRecord.Size = new Size(79, 27);
             buttonStopRecord.TabIndex = 1;
             buttonStopRecord.Text = "Stop";
             buttonStopRecord.UseVisualStyleBackColor = true;
@@ -68,17 +74,17 @@
             // 
             buttonPlay.Location = new Point(6, 78);
             buttonPlay.Name = "buttonPlay";
-            buttonPlay.Size = new Size(77, 27);
+            buttonPlay.Size = new Size(79, 27);
             buttonPlay.TabIndex = 2;
-            buttonPlay.Text = "Play";
+            buttonPlay.Text = "Play (F7)";
             buttonPlay.UseVisualStyleBackColor = true;
             buttonPlay.Click += buttonPlay_Click;
             // 
             // buttonStopPlay
             // 
-            buttonStopPlay.Location = new Point(89, 78);
+            buttonStopPlay.Location = new Point(90, 78);
             buttonStopPlay.Name = "buttonStopPlay";
-            buttonStopPlay.Size = new Size(77, 27);
+            buttonStopPlay.Size = new Size(79, 27);
             buttonStopPlay.TabIndex = 3;
             buttonStopPlay.Text = "Stop";
             buttonStopPlay.UseVisualStyleBackColor = true;
@@ -87,7 +93,7 @@
             // pictureBoxLogo
             // 
             pictureBoxLogo.Image = Properties.Resources.Full;
-            pictureBoxLogo.Location = new Point(12, 22);
+            pictureBoxLogo.Location = new Point(12, 33);
             pictureBoxLogo.Name = "pictureBoxLogo";
             pictureBoxLogo.Size = new Size(177, 162);
             pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
@@ -100,7 +106,7 @@
             groupBoxControls.Controls.Add(buttonRecord);
             groupBoxControls.Controls.Add(buttonStopRecord);
             groupBoxControls.Controls.Add(buttonStopPlay);
-            groupBoxControls.Location = new Point(12, 190);
+            groupBoxControls.Location = new Point(12, 201);
             groupBoxControls.Name = "groupBoxControls";
             groupBoxControls.Size = new Size(177, 129);
             groupBoxControls.TabIndex = 6;
@@ -110,7 +116,7 @@
             // groupBoxHistory
             // 
             groupBoxHistory.Controls.Add(listViewHistory);
-            groupBoxHistory.Location = new Point(195, 12);
+            groupBoxHistory.Location = new Point(195, 23);
             groupBoxHistory.Name = "groupBoxHistory";
             groupBoxHistory.Size = new Size(383, 307);
             groupBoxHistory.TabIndex = 7;
@@ -142,15 +148,54 @@
             columnHeaderDate.Text = "Date";
             columnHeaderDate.Width = 140;
             // 
+            // menuStrip1
+            // 
+            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, helpToolStripMenuItem });
+            menuStrip1.Location = new Point(0, 0);
+            menuStrip1.Name = "menuStrip1";
+            menuStrip1.Size = new Size(587, 24);
+            menuStrip1.TabIndex = 8;
+            menuStrip1.Text = "menuStrip1";
+            // 
+            // helpToolStripMenuItem
+            // 
+            helpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aboutToolStripMenuItem });
+            helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            helpToolStripMenuItem.Size = new Size(44, 20);
+            helpToolStripMenuItem.Text = "Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            aboutToolStripMenuItem.Size = new Size(180, 22);
+            aboutToolStripMenuItem.Text = "About";
+            aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
+            // 
+            // fileToolStripMenuItem
+            // 
+            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { exitToolStripMenuItem });
+            fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            fileToolStripMenuItem.Size = new Size(37, 20);
+            fileToolStripMenuItem.Text = "File";
+            // 
+            // exitToolStripMenuItem
+            // 
+            exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            exitToolStripMenuItem.Size = new Size(180, 22);
+            exitToolStripMenuItem.Text = "Exit";
+            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(587, 340);
+            ClientSize = new Size(587, 347);
             Controls.Add(groupBoxHistory);
             Controls.Add(groupBoxControls);
             Controls.Add(pictureBoxLogo);
+            Controls.Add(menuStrip1);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MainMenuStrip = menuStrip1;
             MaximizeBox = false;
             Name = "FormMain";
             StartPosition = FormStartPosition.CenterScreen;
@@ -159,7 +204,10 @@
             ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).EndInit();
             groupBoxControls.ResumeLayout(false);
             groupBoxHistory.ResumeLayout(false);
+            menuStrip1.ResumeLayout(false);
+            menuStrip1.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -174,5 +222,10 @@
         private ListView listViewHistory;
         private ColumnHeader columnHeaderName;
         private ColumnHeader columnHeaderDate;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem fileToolStripMenuItem;
+        private ToolStripMenuItem exitToolStripMenuItem;
+        private ToolStripMenuItem helpToolStripMenuItem;
+        private ToolStripMenuItem aboutToolStripMenuItem;
     }
 }

@@ -7,6 +7,18 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>Art\Icon.ico</ApplicationIcon>
+    <Title>MacroBot</Title>
+    <Authors>NetworkDLS</Authors>
+    <Company>NetworkDLS</Company>
+    <Description>Macro recorder and player for Windows.
+
+</Description>
+    <Copyright>Copyright © 2000-2023 NetworkDLS.</Copyright>
+    <PackageProjectUrl>https://github.com/NTDLS/MacroBot</PackageProjectUrl>
+    <PackageIcon>Full.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/NTDLS/MacroBot</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,6 +42,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Art\Full.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

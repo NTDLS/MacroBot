@@ -2,6 +2,7 @@ using MacroBot.Forms;
 using MacroBot.Hooks;
 using MacroBot.Recording;
 using MacroBot.Win32;
+using NetProxy.Client.Forms;
 using Newtonsoft.Json;
 using NTDLS.Persistence;
 
@@ -253,5 +254,16 @@ namespace MacroBot
         private void buttonStopRecord_Click(object sender, EventArgs e) => StopRecord();
         private void buttonPlay_Click(object sender, EventArgs e) => StartPlay();
         private void buttonStopPlay_Click(object sender, EventArgs e) => StopPlay();
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using var form = new FormAbout();
+            form.ShowDialog();
+        }
     }
 }
