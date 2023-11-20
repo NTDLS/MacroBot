@@ -10,6 +10,7 @@ namespace MacroBot
     {
         private readonly ActionRecorder _actionRecorder = new();
         private readonly ActionPlayer _actionPlayer = new();
+        private bool _isGridPopulating = false;
 
         public FormMain()
         {
@@ -27,6 +28,7 @@ namespace MacroBot
             };
 
             listViewHistory.ItemChecked += ListViewHistory_ItemChecked;
+            listViewHistory.MouseDown += ListViewHistory_MouseDown;
             listViewHistory.KeyUp += ListViewHistory_KeyUp;
 
             LoadRecordings();
@@ -34,9 +36,27 @@ namespace MacroBot
             _actionPlayer.OnStopped += ActionPlayer_OnStopped;
         }
 
+        private void ListViewHistory_MouseDown(object? sender, MouseEventArgs e)
+        {
+            _isGridPopulating = true;
+            if (e.Button == MouseButtons.Left && e.Clicks == 2 && listViewHistory.SelectedItems.Count == 1)
+            {
+                listViewHistory.SelectedItems[0].Checked = !listViewHistory.SelectedItems[0].Checked;
+            }
+            _isGridPopulating = false;
+        }
+
         private void ListViewHistory_KeyUp(object? sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Delete)
+            if (e.KeyCode == Keys.F2)
+            {
+                if (listViewHistory.SelectedItems.Count > 0)
+                {
+                    var item = listViewHistory.SelectedItems[0];
+                    item.BeginEdit();
+                }
+            }
+            else if (e.KeyCode == Keys.Delete)
             {
                 if (listViewHistory.SelectedItems.Count > 0)
                 {
@@ -55,7 +75,7 @@ namespace MacroBot
 
         private void ListViewHistory_ItemChecked(object? sender, ItemCheckedEventArgs e)
         {
-            if (e.Item.Checked == false)
+            if (e.Item.Checked == false || _isGridPopulating)
             {
                 return;
             }
@@ -176,6 +196,7 @@ namespace MacroBot
 
         private void LoadRecordings()
         {
+            _isGridPopulating = true;
             var recordings = ApplicationData.LoadFromDisk("MacroBot", new List<PersistedRecording>());
 
             foreach (var recording in recordings)
@@ -184,7 +205,8 @@ namespace MacroBot
                 listViewHistory.Items.Add(item).Tag = recording;
                 item.Checked = recording.Selected;
             }
-        }
+            _isGridPopulating = false;
+                }
 
         private PersistedRecording? GetSelectedRecording()
         {
@@ -198,7 +220,6 @@ namespace MacroBot
 
             return null;
         }
-
 
         private void StartPlay()
         {

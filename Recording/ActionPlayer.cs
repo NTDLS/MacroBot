@@ -100,7 +100,7 @@ namespace MacroBot.Recording
 
                 if (i < _recordedActions.Count - 1)
                 {
-                    AbortableSleep(_recordedActions[i + 1].DeltaMilliseconds, 1);
+                    AbortableSleep(_recordedActions[i + 1].DeltaMilliseconds, 50);
                 }
             }
 
