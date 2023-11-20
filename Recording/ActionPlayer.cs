@@ -5,7 +5,9 @@ namespace MacroBot.Recording
     internal class ActionPlayer
     {
         private Thread? _thread;
-        private List<RepeatableAction> _recordedActions = new();
+
+        private PersistedRecording? _recording;
+
         public bool IsRunning { get; private set; }
 
         public delegate void StateChanged(ActionPlayer sender);
@@ -20,7 +22,7 @@ namespace MacroBot.Recording
                 return false;
             }
 
-            _recordedActions = recording.Actions;
+            _recording = recording;
 
             IsRunning = true;
             OnStarted?.Invoke(this);
@@ -64,9 +66,14 @@ namespace MacroBot.Recording
 
         private void PlayThreadProc()
         {
-            for (int i = 0; i < _recordedActions.Count; i++)
+            if (_recording == null)
             {
-                var action = _recordedActions[i];
+                return;
+            }
+
+            for (int i = 0; i < _recording.Actions.Count; i++)
+            {
+                var action = _recording.Actions[i];
 
                 if (IsRunning == false)
                 {
@@ -98,9 +105,9 @@ namespace MacroBot.Recording
                         break;
                 }
 
-                if (i < _recordedActions.Count - 1)
+                if (i < _recording.Actions.Count - 1)
                 {
-                    AbortableSleep(_recordedActions[i + 1].DelayMilliseconds, 50);
+                    AbortableSleep(_recording.Actions[i + 1].DelayMilliseconds, _recording.Speed);
                 }
             }
 
