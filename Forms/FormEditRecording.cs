@@ -34,17 +34,27 @@ namespace MacroBot.Forms
             textBoxActions.Text = JsonConvert.SerializeObject(recording.Actions, settings);
         }
 
-        private void buttonCancel_Click(object sender, EventArgs e)
+        private void ButtonCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
             Close();
         }
 
-        private void buttonSave_Click(object sender, EventArgs e)
+        private void ButtonSave_Click(object sender, EventArgs e)
         {
             if (Recording != null)
             {
-                var actions = JsonConvert.DeserializeObject<List<RepeatableAction>>(textBoxActions.Text);
+                List<RepeatableAction>? actions;
+
+                try
+                {
+                    actions = JsonConvert.DeserializeObject<List<RepeatableAction>>(textBoxActions.Text);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"The recording text is invalid: {ex.Message}", "MacroBot", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
                 if (!double.TryParse(textBoxSpeed.Text, out var speed))
                 {
