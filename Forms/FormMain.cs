@@ -138,7 +138,8 @@ namespace MacroBot
             };
 
             var item = new ListViewItem(new string[] { recording.Name, recording.SafeDateTimeName });
-            listViewHistory.Items.Add(item).Tag = recording;
+            listViewHistory.Items.Insert(0, item).Tag = recording;
+            item.Checked = true;
 
             SaveRecordings();
 
