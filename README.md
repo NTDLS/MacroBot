@@ -9,5 +9,6 @@ Just a simple macro recorder and player for windows that allows you to capture a
 
 
 ...you can edit the recording and change the speed:
+
 ![image](https://github.com/NTDLS/MacroBot/assets/11428567/d240e19e-1278-43f3-be70-2b16d61778e2)
 
