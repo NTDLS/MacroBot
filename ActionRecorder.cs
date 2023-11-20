@@ -10,7 +10,8 @@ namespace MacroBot
         private int _lastMouseX = -1;
         private int _lastMouseY = -1;
         private DateTime? lastRecordedDateTime = null;
-        private List<RepeatableAction> _recordedActions = new();
+
+        public List<RepeatableAction> Actions { get; private set; } = new();
         public bool IsRunning { get; private set; }
 
         public void AddRecordedAction(RepeatableAction action)
@@ -32,7 +33,7 @@ namespace MacroBot
                 action.DeltaMilliseconds = (int)(DateTime.Now - (DateTime)lastRecordedDateTime).TotalMilliseconds; ;
             }
 
-            _recordedActions.Add(action);
+            Actions.Add(action);
             lastRecordedDateTime = DateTime.Now;
 
             if (action.ActionType == ActionTypes.MouseMove)
@@ -53,7 +54,7 @@ namespace MacroBot
             _lastMouseX = -1;
             _lastMouseY = -1;
             lastRecordedDateTime = null;
-            _recordedActions = new();
+            Actions = new();
 
             KeyboardHook.OnKeyboardEventInterceptor += KeyboardHook_OnKeyboardEventInterceptor;
 
@@ -126,11 +127,6 @@ namespace MacroBot
             MouseHook.Remove();
             _recordTimer.Stop();
             return false;
-        }
-
-        public void Save()
-        {
-            ApplicationData.SaveToDisk("MacroBot", _recordedActions);
         }
     }
 }

@@ -1,3 +1,6 @@
+using NTDLS.Persistence;
+using System.Collections.Generic;
+
 namespace MacroBot
 {
     public partial class FormMain : Form
@@ -13,9 +16,28 @@ namespace MacroBot
         private void Form1_Load(object sender, EventArgs e)
         {
             KeyboardHook.OnKeyboardEventInterceptor += KeyboardHook_OnKeyboardEventInterceptor;
-            ToggleFormVisualStates();
+            listViewHistory.AfterLabelEdit += (object? sender, LabelEditEventArgs e) =>
+            {
+                listViewHistory.Items[e.Item].Text = e.Label;
 
-            _actionPlayer.OnStopped += (ActionPlayer sender) => { ToggleFormVisualStates(); };
+                SaveRecordings();
+            };
+
+            LoadRecordings();
+            ToggleFormVisualStates();
+            _actionPlayer.OnStopped += _actionPlayer_OnStopped;
+        }
+
+
+        private void _actionPlayer_OnStopped(ActionPlayer sender)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(() => _actionPlayer_OnStopped(sender));
+                return;
+            }
+
+            ToggleFormVisualStates();
         }
 
         private void KeyboardHook_OnKeyboardEventInterceptor(Keys key, Win32s.ButtonDisposition keyboardButtonDirection)
@@ -49,12 +71,6 @@ namespace MacroBot
 
         private void ToggleFormVisualStates()
         {
-            if (InvokeRequired)
-            {
-                Invoke(ToggleFormVisualStates);
-                return;
-            }
-
             buttonRecord.BackColor = _actionRecorder.IsRunning ? Color.LightGreen : SystemColors.Control;
             buttonStopRecord.BackColor = _actionRecorder.IsRunning ? Color.IndianRed : SystemColors.Control;
 
@@ -77,8 +93,48 @@ namespace MacroBot
         private void StopRecord()
         {
             _actionRecorder.Stop();
-            _actionRecorder.Save();
+
+            var recording = new PersistedRecording()
+            {
+                Name = $"Recording {(listViewHistory.Items.Count + 1):n0}",
+                CreatedDate = DateTime.Now,
+                Actions = _actionRecorder.Actions
+            };
+
+            var item = new ListViewItem(new string[] { recording.Name, recording.SafeDateTimeName() });
+            listViewHistory.Items.Add(item).Tag = recording;
+
+            SaveRecordings();
+
             ToggleFormVisualStates();
+        }
+
+        private void SaveRecordings()
+        {
+            List<PersistedRecording> recordings = new();
+
+            foreach (ListViewItem item in listViewHistory.Items)
+            {
+                var rowPersist = (PersistedRecording?)item.Tag;
+                if (rowPersist != null)
+                {
+                    rowPersist.Name = item.Text;
+                    recordings.Add(rowPersist);
+                }
+            }
+
+            ApplicationData.SaveToDisk("MacroBot", recordings);
+        }
+
+        private void LoadRecordings()
+        {
+            var recordings = ApplicationData.LoadFromDisk("MacroBot", new List<PersistedRecording>());
+
+            foreach (var recording in recordings)
+            {
+                var item = new ListViewItem(new string[] { recording.Name, recording.SafeDateTimeName() });
+                listViewHistory.Items.Add(item).Tag = recording;
+            }
         }
 
         private void StartPlay()

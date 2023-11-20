@@ -34,11 +34,11 @@
             buttonPlay = new Button();
             buttonStopPlay = new Button();
             pictureBoxLogo = new PictureBox();
-            listViewHistory = new ListView();
             groupBoxControls = new GroupBox();
             groupBoxHistory = new GroupBox();
+            listViewHistory = new ListView();
             columnHeaderName = new ColumnHeader();
-            columnHeaderCreated = new ColumnHeader();
+            columnHeaderDate = new ColumnHeader();
             ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).BeginInit();
             groupBoxControls.SuspendLayout();
             groupBoxHistory.SuspendLayout();
@@ -94,16 +94,6 @@
             pictureBoxLogo.TabIndex = 4;
             pictureBoxLogo.TabStop = false;
             // 
-            // listViewHistory
-            // 
-            listViewHistory.Columns.AddRange(new ColumnHeader[] { columnHeaderName, columnHeaderCreated });
-            listViewHistory.Location = new Point(10, 22);
-            listViewHistory.Name = "listViewHistory";
-            listViewHistory.Size = new Size(303, 271);
-            listViewHistory.TabIndex = 5;
-            listViewHistory.UseCompatibleStateImageBehavior = false;
-            listViewHistory.View = View.Details;
-            // 
             // groupBoxControls
             // 
             groupBoxControls.Controls.Add(buttonPlay);
@@ -122,26 +112,40 @@
             groupBoxHistory.Controls.Add(listViewHistory);
             groupBoxHistory.Location = new Point(195, 12);
             groupBoxHistory.Name = "groupBoxHistory";
-            groupBoxHistory.Size = new Size(321, 307);
+            groupBoxHistory.Size = new Size(383, 307);
             groupBoxHistory.TabIndex = 7;
             groupBoxHistory.TabStop = false;
             groupBoxHistory.Text = "History";
+            // 
+            // listViewHistory
+            // 
+            listViewHistory.Columns.AddRange(new ColumnHeader[] { columnHeaderName, columnHeaderDate });
+            listViewHistory.FullRowSelect = true;
+            listViewHistory.GridLines = true;
+            listViewHistory.LabelEdit = true;
+            listViewHistory.Location = new Point(6, 22);
+            listViewHistory.MultiSelect = false;
+            listViewHistory.Name = "listViewHistory";
+            listViewHistory.Size = new Size(371, 279);
+            listViewHistory.TabIndex = 0;
+            listViewHistory.UseCompatibleStateImageBehavior = false;
+            listViewHistory.View = View.Details;
             // 
             // columnHeaderName
             // 
             columnHeaderName.Text = "Name";
             columnHeaderName.Width = 200;
             // 
-            // columnHeaderCreated
+            // columnHeaderDate
             // 
-            columnHeaderCreated.Text = "Created";
-            columnHeaderCreated.Width = 100;
+            columnHeaderDate.Text = "Date";
+            columnHeaderDate.Width = 140;
             // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(528, 354);
+            ClientSize = new Size(587, 340);
             Controls.Add(groupBoxHistory);
             Controls.Add(groupBoxControls);
             Controls.Add(pictureBoxLogo);
@@ -164,10 +168,10 @@
         private Button buttonPlay;
         private Button buttonStopPlay;
         private PictureBox pictureBoxLogo;
-        private ListView listViewHistory;
         private GroupBox groupBoxControls;
         private GroupBox groupBoxHistory;
+        private ListView listViewHistory;
         private ColumnHeader columnHeaderName;
-        private ColumnHeader columnHeaderCreated;
+        private ColumnHeader columnHeaderDate;
     }
 }
