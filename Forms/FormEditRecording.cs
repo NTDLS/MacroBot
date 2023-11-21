@@ -24,6 +24,8 @@ namespace MacroBot.Forms
 
             textBoxName.Text = recording.Name;
             textBoxSpeed.Text = recording.Speed.ToString();
+            textBoxRepetitions.Text = recording.Repetitions.ToString();
+            textBoxRepetitionDelay.Text = recording.RepetitionDelay.ToString();
 
             var settings = new JsonSerializerSettings
             {
@@ -61,12 +63,24 @@ namespace MacroBot.Forms
                     speed = 1;
                 }
 
+                if (!int.TryParse(textBoxRepetitions.Text, out var repetitions))
+                {
+                    repetitions = 0;
+                }
+
+                if (!int.TryParse(textBoxRepetitionDelay.Text, out var repetitionDelay))
+                {
+                    repetitionDelay = 1000;
+                }
+
                 var newRecording = new PersistedRecording()
                 {
                     CreatedDate = Recording.CreatedDate,
                     Name = textBoxName.Text,
                     Selected = Recording.Selected,
                     Speed = speed,
+                    Repetitions = repetitions,
+                    RepetitionDelay = repetitionDelay,
                     Actions = actions ?? new List<RepeatableAction>()
                 };
 
