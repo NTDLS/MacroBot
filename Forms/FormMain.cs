@@ -19,7 +19,7 @@ namespace MacroBot
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void FormMain_Load(object sender, EventArgs e)
         {
             KeyboardHook.OnKeyboardEventInterceptor += KeyboardHook_OnKeyboardEventInterceptor;
             listViewHistory.AfterLabelEdit += (object? sender, LabelEditEventArgs e) =>
@@ -36,6 +36,8 @@ namespace MacroBot
             LoadRecordings();
             ToggleFormVisualStates();
             _actionPlayer.OnStopped += ActionPlayer_OnStopped;
+
+            FormClosed += (object? sender, FormClosedEventArgs e) => SaveRecordings();
         }
 
         private void ListViewHistory_MouseDown(object? sender, MouseEventArgs e)
@@ -250,17 +252,17 @@ namespace MacroBot
             ToggleFormVisualStates();
         }
 
-        private void buttonRecord_Click(object sender, EventArgs e) => StartRecord();
-        private void buttonStopRecord_Click(object sender, EventArgs e) => StopRecord();
-        private void buttonPlay_Click(object sender, EventArgs e) => StartPlay();
-        private void buttonStopPlay_Click(object sender, EventArgs e) => StopPlay();
+        private void ButtonRecord_Click(object sender, EventArgs e) => StartRecord();
+        private void ButtonStopRecord_Click(object sender, EventArgs e) => StopRecord();
+        private void ButtonPlay_Click(object sender, EventArgs e) => StartPlay();
+        private void ButtonStopPlay_Click(object sender, EventArgs e) => StopPlay();
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             using var form = new FormAbout();
             form.ShowDialog();

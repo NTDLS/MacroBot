@@ -58,7 +58,7 @@
             buttonRecord.TabIndex = 0;
             buttonRecord.Text = "Record (F6)";
             buttonRecord.UseVisualStyleBackColor = true;
-            buttonRecord.Click += buttonRecord_Click;
+            buttonRecord.Click += ButtonRecord_Click;
             // 
             // buttonStopRecord
             // 
@@ -68,7 +68,7 @@
             buttonStopRecord.TabIndex = 1;
             buttonStopRecord.Text = "Stop";
             buttonStopRecord.UseVisualStyleBackColor = true;
-            buttonStopRecord.Click += buttonStopRecord_Click;
+            buttonStopRecord.Click += ButtonStopRecord_Click;
             // 
             // buttonPlay
             // 
@@ -78,7 +78,7 @@
             buttonPlay.TabIndex = 2;
             buttonPlay.Text = "Play (F7)";
             buttonPlay.UseVisualStyleBackColor = true;
-            buttonPlay.Click += buttonPlay_Click;
+            buttonPlay.Click += ButtonPlay_Click;
             // 
             // buttonStopPlay
             // 
@@ -88,7 +88,7 @@
             buttonStopPlay.TabIndex = 3;
             buttonStopPlay.Text = "Stop";
             buttonStopPlay.UseVisualStyleBackColor = true;
-            buttonStopPlay.Click += buttonStopPlay_Click;
+            buttonStopPlay.Click += ButtonStopPlay_Click;
             // 
             // pictureBoxLogo
             // 
@@ -169,7 +169,7 @@
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             exitToolStripMenuItem.Size = new Size(93, 22);
             exitToolStripMenuItem.Text = "Exit";
-            exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
+            exitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
             // 
             // helpToolStripMenuItem
             // 
@@ -183,7 +183,7 @@
             aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             aboutToolStripMenuItem.Size = new Size(107, 22);
             aboutToolStripMenuItem.Text = "About";
-            aboutToolStripMenuItem.Click += aboutToolStripMenuItem_Click;
+            aboutToolStripMenuItem.Click += AboutToolStripMenuItem_Click;
             // 
             // FormMain
             // 
@@ -201,7 +201,7 @@
             Name = "FormMain";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MacroBot";
-            Load += Form1_Load;
+            Load += FormMain_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).EndInit();
             groupBoxControls.ResumeLayout(false);
             groupBoxHistory.ResumeLayout(false);
