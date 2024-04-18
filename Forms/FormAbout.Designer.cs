@@ -1,4 +1,4 @@
-﻿namespace NetProxy.Client.Forms
+﻿namespace MacroBot.Forms
 {
     partial class FormAbout
     {

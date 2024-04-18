@@ -2,7 +2,6 @@ using MacroBot.Forms;
 using MacroBot.Hooks;
 using MacroBot.Recording;
 using MacroBot.Win32;
-using NetProxy.Client.Forms;
 using Newtonsoft.Json;
 using NTDLS.Persistence;
 
@@ -10,6 +9,7 @@ namespace MacroBot
 {
     public partial class FormMain : Form
     {
+        private bool _isSettingsDialogOpen { get; set; }
         private readonly ActionRecorder _actionRecorder = new();
         private readonly ActionPlayer _actionPlayer = new();
         private bool _isGridPopulating = false;
@@ -38,6 +38,9 @@ namespace MacroBot
             _actionPlayer.OnStopped += ActionPlayer_OnStopped;
 
             FormClosed += (object? sender, FormClosedEventArgs e) => SaveRecordings();
+
+            buttonPlay.Text = $"Play ({Program.Settings.PlayHotkey})";
+            buttonRecord.Text = $"Record ({Program.Settings.RecordHotkey})";
         }
 
         private void ListViewHistory_MouseDown(object? sender, MouseEventArgs e)
@@ -117,7 +120,12 @@ namespace MacroBot
 
         private void KeyboardHook_OnKeyboardEventInterceptor(Keys key, ButtonDisposition keyboardButtonDirection)
         {
-            if (key == Keys.F6 && keyboardButtonDirection == ButtonDisposition.Up)
+            if (_isSettingsDialogOpen)
+            {
+                return;
+            }
+
+            if (key == Enum.Parse<Keys>(Program.Settings.RecordHotkey) && keyboardButtonDirection == ButtonDisposition.Up)
             {
                 if (_actionPlayer.IsRunning)
                 {
@@ -130,7 +138,7 @@ namespace MacroBot
                 else StartRecord();
 
             }
-            else if (key == Keys.F7 && keyboardButtonDirection == ButtonDisposition.Up)
+            else if (key == Enum.Parse<Keys>(Program.Settings.PlayHotkey) && keyboardButtonDirection == ButtonDisposition.Up)
             {
                 if (_actionRecorder.IsRunning)
                 {
@@ -157,6 +165,15 @@ namespace MacroBot
 
             buttonPlay.Enabled = !_actionRecorder.IsRunning && !_actionPlayer.IsRunning;
             buttonStopPlay.Enabled = _actionPlayer.IsRunning;
+
+            if (Program.Settings.HideWhenMinimized && (_actionRecorder.IsRunning || _actionPlayer.IsRunning))
+            {
+                Hide();
+            }
+            else
+            {
+                Show();
+            }
         }
 
         private void StartRecord()
@@ -206,13 +223,13 @@ namespace MacroBot
                 Formatting = Formatting.Indented,
             };
 
-            ApplicationData.SaveToDisk("MacroBot", recordings, settings);
+            LocalUserApplicationData.SaveToDisk("MacroBot", recordings, settings);
         }
 
         private void LoadRecordings()
         {
             _isGridPopulating = true;
-            var recordings = ApplicationData.LoadFromDisk("MacroBot", new List<PersistedRecording>());
+            var recordings = LocalUserApplicationData.LoadFromDisk("MacroBot", new List<PersistedRecording>());
 
             foreach (var recording in recordings)
             {
@@ -266,6 +283,22 @@ namespace MacroBot
         {
             using var form = new FormAbout();
             form.ShowDialog();
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _isSettingsDialogOpen = true;
+            using var form = new FormSettings();
+            form.ShowDialog();
+
+            buttonPlay.Text = $"Play ({Program.Settings.PlayHotkey})";
+            buttonRecord.Text = $"Record ({Program.Settings.RecordHotkey})";
+            _isSettingsDialogOpen = false;
+        }
+
+        private void notifyIconMain_MouseClick(object sender, MouseEventArgs e)
+        {
+            this.Show();
         }
     }
 }

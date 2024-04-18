@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace NetProxy.Client.Forms
+namespace MacroBot.Forms
 {
     public partial class FormAbout : Form
     {

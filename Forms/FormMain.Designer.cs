@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             buttonRecord = new Button();
             buttonStopRecord = new Button();
@@ -42,8 +43,10 @@
             menuStrip1 = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
+            settingsToolStripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
+            notifyIconMain = new NotifyIcon(components);
             ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).BeginInit();
             groupBoxControls.SuspendLayout();
             groupBoxHistory.SuspendLayout();
@@ -56,7 +59,7 @@
             buttonRecord.Name = "buttonRecord";
             buttonRecord.Size = new Size(79, 27);
             buttonRecord.TabIndex = 0;
-            buttonRecord.Text = "Record (F6)";
+            buttonRecord.Text = "Record";
             buttonRecord.UseVisualStyleBackColor = true;
             buttonRecord.Click += ButtonRecord_Click;
             // 
@@ -76,7 +79,7 @@
             buttonPlay.Name = "buttonPlay";
             buttonPlay.Size = new Size(79, 27);
             buttonPlay.TabIndex = 2;
-            buttonPlay.Text = "Play (F7)";
+            buttonPlay.Text = "Play";
             buttonPlay.UseVisualStyleBackColor = true;
             buttonPlay.Click += ButtonPlay_Click;
             // 
@@ -150,7 +153,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, helpToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, settingsToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(587, 24);
@@ -171,6 +174,13 @@
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
             // 
+            // settingsToolStripMenuItem
+            // 
+            settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            settingsToolStripMenuItem.Size = new Size(61, 20);
+            settingsToolStripMenuItem.Text = "Settings";
+            settingsToolStripMenuItem.Click += settingsToolStripMenuItem_Click;
+            // 
             // helpToolStripMenuItem
             // 
             helpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { aboutToolStripMenuItem });
@@ -184,6 +194,15 @@
             aboutToolStripMenuItem.Size = new Size(107, 22);
             aboutToolStripMenuItem.Text = "About";
             aboutToolStripMenuItem.Click += AboutToolStripMenuItem_Click;
+            // 
+            // notifyIconMain
+            // 
+            notifyIconMain.BalloonTipText = "MacroBot";
+            notifyIconMain.BalloonTipTitle = "MacroBot";
+            notifyIconMain.Icon = (Icon)resources.GetObject("notifyIconMain.Icon");
+            notifyIconMain.Text = "MacroBot";
+            notifyIconMain.Visible = true;
+            notifyIconMain.MouseClick += notifyIconMain_MouseClick;
             // 
             // FormMain
             // 
@@ -228,5 +247,7 @@
         private ToolStripMenuItem exitToolStripMenuItem;
         private ToolStripMenuItem helpToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem;
+        private NotifyIcon notifyIconMain;
+        private ToolStripMenuItem settingsToolStripMenuItem;
     }
 }

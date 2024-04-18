@@ -1,13 +1,13 @@
 ;#define Debug
 #define CompanyName         "NetworkDLS"
 #define ApplicationName     "MacroBot"
-#define ApplicationVersion  "1.0.2.0"
+#define ApplicationVersion  "1.0.3"
 
 [Setup]
 ;-- Main Setup Information
  AppName                         = {#ApplicationName}
  AppVerName                      = {#ApplicationName} {#ApplicationVersion}
- AppCopyright                    = Copyright © 2000-2023 {#CompanyName}.
+ AppCopyright                    = Copyright © 2000-2024 {#CompanyName}.
  DefaultDirName                  = {commonpf}\{#CompanyName}\{#ApplicationName}
  DefaultGroupName                = {#CompanyName}\{#ApplicationName}
  UninstallDisplayIcon            = {app}\MacroBot.exe

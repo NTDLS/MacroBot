@@ -10,7 +10,7 @@
     <Title>MacroBot</Title>
     <Authors>NetworkDLS</Authors>
     <Company>NetworkDLS</Company>
-    <Description>Macro recorder and player for Windows.
+    <Description>Keyboard and Mouse macro recorder and player for Windows.
 
 </Description>
     <Copyright>Copyright © 2000-2023 NetworkDLS.</Copyright>
@@ -19,9 +19,9 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/NTDLS/MacroBot</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.2</Version>
-    <AssemblyVersion>1.0.2</AssemblyVersion>
-    <FileVersion>1.0.2</FileVersion>
+    <Version>1.0.3</Version>
+    <AssemblyVersion>1.0.3</AssemblyVersion>
+    <FileVersion>1.0.3</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,10 +29,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NTDLS.Persistence" Version="1.0.2" />
+    <PackageReference Include="NTDLS.Persistence" Version="1.2.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Forms\FormSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
