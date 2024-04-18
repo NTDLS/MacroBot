@@ -9,6 +9,10 @@ namespace MacroBot.Forms
             InitializeComponent();
 
             checkBoxHideWhenMinimized.Checked = Program.Settings.HideWhenMinimized;
+
+            textBoxRecordHotkey.Text = Program.Settings.RecordHotkey.ToString();
+            textBoxPlayHotkey.Text = Program.Settings.PlayHotkey.ToString();
+
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
