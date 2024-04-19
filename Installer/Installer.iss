@@ -1,7 +1,7 @@
 ;#define Debug
 #define CompanyName         "NetworkDLS"
 #define ApplicationName     "MacroBot"
-#define ApplicationVersion  "1.0.3"
+#define ApplicationVersion  "1.0.4"
 
 [Setup]
 ;-- Main Setup Information

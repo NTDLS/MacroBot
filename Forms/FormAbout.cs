@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Diagnostics;
+using System.Reflection;
 
 namespace MacroBot.Forms
 {
@@ -69,7 +70,11 @@ namespace MacroBot.Forms
 
         private void linkLabel_LinkClicked(object? sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("http://www.NetworkDLS.com");
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "http://www.NetworkDLS.com",
+                UseShellExecute = true
+            });
         }
 
         private void cmdOk_Click(object sender, EventArgs e)
