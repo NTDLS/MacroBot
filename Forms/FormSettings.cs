@@ -1,4 +1,5 @@
 ﻿using NTDLS.Persistence;
+using NTDLS.WinFormsHelpers;
 
 namespace MacroBot.Forms
 {
@@ -12,7 +13,6 @@ namespace MacroBot.Forms
 
             textBoxRecordHotkey.Text = Program.Settings.RecordHotkey.ToString();
             textBoxPlayHotkey.Text = Program.Settings.PlayHotkey.ToString();
-
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
@@ -52,26 +52,15 @@ namespace MacroBot.Forms
             new Thread(() =>
             {
                 Thread.Sleep(15);
-                SetText(textBoxRecordHotkey, e.KeyCode.ToString());
+                textBoxRecordHotkey.InvokeSetText(e.KeyCode.ToString());
             }).Start();
         }
-
-        private void SetText(Control control, string text)
-        {
-            if (control.InvokeRequired)
-            {
-                control.Invoke(() => SetText(control, text));
-                return;
-            }
-            control.Text = text;
-        }
-
         private void textBoxPlayHotkey_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             new Thread(() =>
             {
                 Thread.Sleep(15);
-                SetText(textBoxRecordHotkey, e.KeyCode.ToString());
+                textBoxPlayHotkey.InvokeSetText(e.KeyCode.ToString());
             }).Start();
         }
     }

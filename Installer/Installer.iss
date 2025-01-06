@@ -1,13 +1,13 @@
 ;#define Debug
 #define CompanyName         "NetworkDLS"
 #define ApplicationName     "MacroBot"
-#define ApplicationVersion  "1.0.5"
+#define ApplicationVersion  "1.0.6"
 
 [Setup]
 ;-- Main Setup Information
  AppName                         = {#ApplicationName}
  AppVerName                      = {#ApplicationName} {#ApplicationVersion}
- AppCopyright                    = Copyright © 2000-2024 {#CompanyName}.
+ AppCopyright                    = Copyright © 2000-2025 {#CompanyName}.
  DefaultDirName                  = {commonpf}\{#CompanyName}\{#ApplicationName}
  DefaultGroupName                = {#CompanyName}\{#ApplicationName}
  UninstallDisplayIcon            = {app}\MacroBot.exe
@@ -16,8 +16,8 @@
  Uninstallable                   = Yes
  Compression                     = ZIP/9
  MinVersion                      = 6.2
- ArchitecturesInstallIn64BitMode = x64
- ArchitecturesAllowed            = x86 x64
+ ArchitecturesInstallIn64BitMode = x64os
+ ArchitecturesAllowed            = x86 x64os
  OutputBaseFilename              = {#ApplicationName} {#ApplicationVersion}
  
 ;-- Windows 2000+ Support Dialog
