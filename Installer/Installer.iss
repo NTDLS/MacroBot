@@ -27,9 +27,9 @@
  AppVersion      = {#ApplicationVersion}
 
 [Files]
- Source: "..\bin\Release\net8.0-windows\*.json"; Excludes: "*vshost*"; DestDir: "{app}";              Flags: IgnoreVersion;
- Source: "..\bin\Release\net8.0-windows\*.exe";  Excludes: "*vshost*"; DestDir: "{app}";              Flags: IgnoreVersion;
- Source: "..\bin\Release\net8.0-windows\*.dll";  Excludes: "*vshost*"; DestDir: "{app}";              Flags: IgnoreVersion;
+ Source: "..\bin\Release\net10.0-windows\*.json"; Excludes: "*vshost*"; DestDir: "{app}";              Flags: IgnoreVersion;
+ Source: "..\bin\Release\net10.0-windows\*.exe";  Excludes: "*vshost*"; DestDir: "{app}";              Flags: IgnoreVersion;
+ Source: "..\bin\Release\net10.0-windows\*.dll";  Excludes: "*vshost*"; DestDir: "{app}";              Flags: IgnoreVersion;
 
 ;---------------------------------------------------------------------
 

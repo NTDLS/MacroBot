@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Installer/Installer.iss" />
+  </Folder>
+  <Project Path="MacroBot.csproj" />
+</Solution>
