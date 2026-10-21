@@ -6,21 +6,32 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <ApplicationIcon>Art\Icon.ico</ApplicationIcon>
+    <ApplicationIcon>Icon.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Title>MacroBot</Title>
     <Authors>NetworkDLS</Authors>
     <Company>NetworkDLS</Company>
     <Description>Keyboard and Mouse macro recorder and player for Windows.</Description>
-    <Copyright>Copyright © 2000-2025 NetworkDLS.</Copyright>
-    <Version>1.0.6</Version>
+    <Copyright>Copyright © 2000-2026 NetworkDLS.</Copyright>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Art\Icon.ico" />
+    <Compile Remove="Art\**" />
+    <EmbeddedResource Remove="Art\**" />
+    <None Remove="Art\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="NTDLS.Localization.StaticLocalizer" Static="true" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NTDLS.Localization" Version="1.0.2" />
     <PackageReference Include="NTDLS.Persistence" Version="2.0.0" />
     <PackageReference Include="NTDLS.WinFormsHelpers" Version="1.6.3" />
   </ItemGroup>
@@ -44,14 +55,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Art\Full.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
     <None Update="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+    <None Update="Translations\Translations.db" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

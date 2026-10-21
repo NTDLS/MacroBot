@@ -1,7 +1,7 @@
 ;#define Debug
 #define CompanyName         "NetworkDLS"
 #define ApplicationName     "MacroBot"
-#define ApplicationVersion  "1.0.6"
+#define ApplicationVersion  "2.0.0"
 
 [Setup]
 ;-- Main Setup Information
@@ -27,10 +27,8 @@
  AppVersion      = {#ApplicationVersion}
 
 [Files]
- Source: "..\bin\Release\net10.0-windows\*.json"; Excludes: "*vshost*"; DestDir: "{app}";              Flags: IgnoreVersion;
- Source: "..\bin\Release\net10.0-windows\*.exe";  Excludes: "*vshost*"; DestDir: "{app}";              Flags: IgnoreVersion;
- Source: "..\bin\Release\net10.0-windows\*.dll";  Excludes: "*vshost*"; DestDir: "{app}";              Flags: IgnoreVersion;
-
+ Source: "Publish\*.exe"; DestDir: "{app}"; Flags: IgnoreVersion;
+ 
 ;---------------------------------------------------------------------
 
 [Icons]

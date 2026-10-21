@@ -37,12 +37,13 @@
             groupBoxHistory = new GroupBox();
             listViewHistory = new ListView();
             columnHeaderName = new ColumnHeader();
-            columnHeaderDate = new ColumnHeader();
             columnHeaderType = new ColumnHeader();
+            columnHeaderDate = new ColumnHeader();
             menuStrip1 = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
             settingsToolStripMenuItem = new ToolStripMenuItem();
+            languageToolStripMenuItem = new ToolStripMenuItem();
             helpToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
             notifyIconMain = new NotifyIcon(components);
@@ -80,7 +81,7 @@
             // 
             // pictureBoxLogo
             // 
-            pictureBoxLogo.Image = Properties.Resources.Full;
+            pictureBoxLogo.Image = (Image)resources.GetObject("pictureBoxLogo.Image");
             pictureBoxLogo.Location = new Point(36, 33);
             pictureBoxLogo.Name = "pictureBoxLogo";
             pictureBoxLogo.Size = new Size(177, 162);
@@ -130,7 +131,7 @@
             // 
             // menuStrip1
             // 
-            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, settingsToolStripMenuItem, helpToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, settingsToolStripMenuItem, languageToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.Size = new Size(643, 24);
@@ -157,6 +158,13 @@
             settingsToolStripMenuItem.Size = new Size(61, 20);
             settingsToolStripMenuItem.Text = "Settings";
             settingsToolStripMenuItem.Click += SettingsToolStripMenuItem_Click;
+            // 
+            // languageToolStripMenuItem
+            // 
+            languageToolStripMenuItem.Name = "languageToolStripMenuItem";
+            languageToolStripMenuItem.Size = new Size(71, 20);
+            languageToolStripMenuItem.Text = "Language";
+            languageToolStripMenuItem.Click += LanguageToolStripMenuItem_Click;
             // 
             // helpToolStripMenuItem
             // 
@@ -226,5 +234,6 @@
         private ToolStripMenuItem aboutToolStripMenuItem;
         private NotifyIcon notifyIconMain;
         private ToolStripMenuItem settingsToolStripMenuItem;
+        private ToolStripMenuItem languageToolStripMenuItem;
     }
 }

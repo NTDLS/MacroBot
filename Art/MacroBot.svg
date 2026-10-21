@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="MacroBot">
+  <title>MacroBot</title>
+
+  <!-- Background -->
+  <rect width="256" height="256" rx="48" fill="#1f2a44"/>
+
+  <!-- Antenna with a record light -->
+  <line x1="128" y1="74" x2="128" y2="46" stroke="#9fb3d1" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="128" cy="38" r="12" fill="#e53935"/>
+  <circle cx="123" cy="33" r="4" fill="#ff8a80"/>
+
+  <!-- Ears -->
+  <rect x="34" y="112" width="22" height="52" rx="8" fill="#9fb3d1"/>
+  <rect x="200" y="112" width="22" height="52" rx="8" fill="#9fb3d1"/>
+
+  <!-- Head -->
+  <rect x="50" y="74" width="156" height="124" rx="30" fill="#e8eef7"/>
+  <rect x="62" y="86" width="132" height="100" rx="20" fill="#2b3a5c"/>
+
+  <!-- Eyes -->
+  <circle cx="102" cy="124" r="16" fill="#4dd0e1"/>
+  <circle cx="154" cy="124" r="16" fill="#4dd0e1"/>
+  <circle cx="107" cy="119" r="5" fill="#e0f7fa"/>
+  <circle cx="159" cy="119" r="5" fill="#e0f7fa"/>
+
+  <!-- Mouth: a play triangle, because it replays what you did -->
+  <path d="M116 152 L116 176 L140 164 Z" fill="#66bb6a"/>
+
+  <!-- Mouse cursor -->
+  <path d="M168 150 L168 222 L186 205 L199 236 L214 229 L201 199 L226 199 Z"
+        fill="#ffffff" stroke="#1f2a44" stroke-width="7" stroke-linejoin="round"/>
+</svg>

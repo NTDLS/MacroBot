@@ -3,6 +3,7 @@ using MacroBot.Hooks;
 using MacroBot.Properties;
 using MacroBot.Recording;
 using MacroBot.Win32;
+using NTDLS.Localization;
 using NTDLS.Persistence;
 using NTDLS.WinFormsHelpers;
 using NTDLS.WinFormsHelpers.Forms;
@@ -16,10 +17,14 @@ namespace MacroBot
         private readonly ActionPlayer _actionPlayer = new();
         private bool _isGridPopulating = false;
         private readonly ToolTip _toolTip = new();
+        private ToolStripMenuItem _playMenuItem = new();
+        private ToolStripMenuItem _renameMenuItem = new() { ShortcutKeyDisplayString = "F2" };
+        private ToolStripMenuItem _deleteMenuItem = new() { ShortcutKeyDisplayString = "Del" };
 
         public FormMain()
         {
             InitializeComponent();
+            FormLocalizer.Apply(this);
             Theming.InitializeApplication();
         }
 
@@ -46,7 +51,7 @@ namespace MacroBot
 
             FormClosed += (object? sender, FormClosedEventArgs e) => SaveRecordings();
 
-            UpdateButtonHints();
+            ApplyLanguage();
         }
 
         private void InitializeButtonImages()
@@ -57,16 +62,17 @@ namespace MacroBot
             buttonRecord.Image = ButtonIcons.Record(size);
             buttonStop.Image = ButtonIcons.Stop(size);
 
-            buttonPlay.AccessibleName = "Play";
-            buttonRecord.AccessibleName = "Record";
-            buttonStop.AccessibleName = "Stop";
         }
 
         private void UpdateButtonHints()
         {
-            _toolTip.SetToolTip(buttonPlay, $"Play ({Program.Settings.PlayHotkey})");
-            _toolTip.SetToolTip(buttonRecord, $"Record ({Program.Settings.RecordHotkey})");
-            _toolTip.SetToolTip(buttonStop, "Stop");
+            _toolTip.SetToolTip(buttonPlay, Localize("Play ({0})", Program.Settings.PlayHotkey));
+            _toolTip.SetToolTip(buttonRecord, Localize("Record ({0})", Program.Settings.RecordHotkey));
+            _toolTip.SetToolTip(buttonStop, Localize("Stop"));
+
+            buttonPlay.AccessibleName = Localize("Play");
+            buttonRecord.AccessibleName = Localize("Record");
+            buttonStop.AccessibleName = Localize("Stop");
         }
 
         private void ListViewHistory_MouseDown(object? sender, MouseEventArgs e)
@@ -115,7 +121,7 @@ namespace MacroBot
 
             var item = listViewHistory.SelectedItems[0];
 
-            if (MessageBox.Show($"Delete the recording '{item.Text}'", "MacroBot", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            if (MessageBox.Show(Localize("Delete the recording '{0}'", item.Text), "MacroBot", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {
                 return;
             }
@@ -126,20 +132,18 @@ namespace MacroBot
 
         private void InitializeGridContextMenu()
         {
-            var renameMenuItem = new ToolStripMenuItem("Rename", null, (s, e) =>
+            //The text of the items is set by ApplyLanguage().
+            _renameMenuItem.Click += (s, e) =>
             {
                 if (listViewHistory.SelectedItems.Count > 0)
                 {
                     listViewHistory.SelectedItems[0].BeginEdit();
                 }
-            }) { ShortcutKeyDisplayString = "F2" };
-
-            var deleteMenuItem = new ToolStripMenuItem("Delete", null, (s, e) => DeleteSelectedRecording())
-            {
-                ShortcutKeyDisplayString = "Del"
             };
 
-            var playMenuItem = new ToolStripMenuItem("Play", null, (s, e) =>
+            _deleteMenuItem.Click += (s, e) => DeleteSelectedRecording();
+
+            _playMenuItem.Click += (s, e) =>
             {
                 if (listViewHistory.SelectedItems.Count > 0)
                 {
@@ -147,10 +151,10 @@ namespace MacroBot
                     listViewHistory.SelectedItems[0].Checked = true;
                     StartPlay();
                 }
-            });
+            };
 
             var menu = new ContextMenuStrip();
-            menu.Items.AddRange([playMenuItem, new ToolStripSeparator(), renameMenuItem, deleteMenuItem]);
+            menu.Items.AddRange([_playMenuItem, new ToolStripSeparator(), _renameMenuItem, _deleteMenuItem]);
 
             menu.Opening += (s, e) =>
             {
@@ -162,11 +166,37 @@ namespace MacroBot
                 }
 
                 //We cannot play while recording or already playing.
-                playMenuItem.Enabled = !_actionRecorder.IsRunning && !_actionPlayer.IsRunning;
+                _playMenuItem.Enabled = !_actionRecorder.IsRunning && !_actionPlayer.IsRunning;
             };
 
             listViewHistory.ContextMenuStrip = menu;
         }
+
+        /// <summary>
+        /// Puts the text of the window in the current language. Called at the start and whenever the language changes.
+        /// FormLocalizer translates what the designer put on the controls; the rest is set here.
+        /// </summary>
+        private void ApplyLanguage()
+        {
+            FormLocalizer.Apply(this);
+
+            _playMenuItem.Text = Localize("Play");
+            _renameMenuItem.Text = Localize("Rename");
+            _deleteMenuItem.Text = Localize("Delete");
+
+            foreach (ListViewItem item in listViewHistory.Items)
+            {
+                if (item.Tag is PersistedRecording recording)
+                {
+                    item.SubItems[1].Text = GetMouseModeText(recording);
+                }
+            }
+
+            UpdateButtonHints();
+        }
+
+        private static string GetMouseModeText(PersistedRecording recording)
+            => recording.MouseMode == MouseModes.Relative ? Localize("Relative") : Localize("Absolute");
 
         private void ListViewHistory_ItemChecked(object? sender, ItemCheckedEventArgs e)
         {
@@ -273,7 +303,7 @@ namespace MacroBot
                 Actions = _actionRecorder.Actions
             };
 
-            var item = new ListViewItem(new string[] { recording.Name, recording.MouseMode.ToString(), recording.SafeDateTimeName });
+            var item = new ListViewItem(new string[] { recording.Name, GetMouseModeText(recording), recording.SafeDateTimeName });
             listViewHistory.Items.Insert(0, item).Tag = recording;
             item.Checked = true;
 
@@ -327,7 +357,7 @@ namespace MacroBot
 
             foreach (var recording in recordings)
             {
-                var item = new ListViewItem([recording.Name, recording.MouseMode.ToString(), recording.SafeDateTimeName]);
+                var item = new ListViewItem([recording.Name, GetMouseModeText(recording), recording.SafeDateTimeName]);
                 listViewHistory.Items.Add(item).Tag = recording;
                 item.Checked = recording.Selected;
             }
@@ -390,13 +420,27 @@ namespace MacroBot
             using var form = new FormSettings();
             form.ShowDialog();
 
-            UpdateButtonHints();
+            ApplyLanguage();
             _isSettingsDialogOpen = false;
         }
 
         private void NotifyIconMain_MouseClick(object sender, MouseEventArgs e)
         {
             this.Show();
+        }
+
+        private void LanguageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using var form = new FormLanguage(Program.Settings.Language) { Icon = Icon };
+            if (form.ShowDialog(this) != DialogResult.OK)
+            {
+                return;
+            }
+
+            Program.Settings.Language = form.SelectedLanguage;
+            Localizer.Default.SetLanguage(Program.Settings.Language);
+            LocalUserApplicationData.SaveToDisk("MacroBot", Program.Settings);
+            FormLocalizer.Apply(this);
         }
     }
 }
