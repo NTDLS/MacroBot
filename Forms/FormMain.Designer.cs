@@ -31,9 +31,8 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             buttonRecord = new Button();
-            buttonStopRecord = new Button();
+            buttonStop = new Button();
             buttonPlay = new Button();
-            buttonStopPlay = new Button();
             pictureBoxLogo = new PictureBox();
             groupBoxControls = new GroupBox();
             groupBoxHistory = new GroupBox();
@@ -57,46 +56,36 @@
             // 
             buttonRecord.Location = new Point(6, 32);
             buttonRecord.Name = "buttonRecord";
-            buttonRecord.Size = new Size(79, 27);
+            buttonRecord.Size = new Size(100, 27);
             buttonRecord.TabIndex = 0;
             buttonRecord.Text = "Record";
             buttonRecord.UseVisualStyleBackColor = true;
             buttonRecord.Click += ButtonRecord_Click;
             // 
-            // buttonStopRecord
+            // buttonStop
             // 
-            buttonStopRecord.Location = new Point(90, 32);
-            buttonStopRecord.Name = "buttonStopRecord";
-            buttonStopRecord.Size = new Size(79, 27);
-            buttonStopRecord.TabIndex = 1;
-            buttonStopRecord.Text = "Stop";
-            buttonStopRecord.UseVisualStyleBackColor = true;
-            buttonStopRecord.Click += ButtonStopRecord_Click;
+            buttonStop.Location = new Point(115, 32);
+            buttonStop.Name = "buttonStop";
+            buttonStop.Size = new Size(100, 27);
+            buttonStop.TabIndex = 1;
+            buttonStop.Text = "Stop";
+            buttonStop.UseVisualStyleBackColor = true;
+            buttonStop.Click += ButtonStop_Click;
             // 
             // buttonPlay
             // 
             buttonPlay.Location = new Point(6, 78);
             buttonPlay.Name = "buttonPlay";
-            buttonPlay.Size = new Size(79, 27);
+            buttonPlay.Size = new Size(100, 27);
             buttonPlay.TabIndex = 2;
             buttonPlay.Text = "Play";
             buttonPlay.UseVisualStyleBackColor = true;
             buttonPlay.Click += ButtonPlay_Click;
             // 
-            // buttonStopPlay
-            // 
-            buttonStopPlay.Location = new Point(90, 78);
-            buttonStopPlay.Name = "buttonStopPlay";
-            buttonStopPlay.Size = new Size(79, 27);
-            buttonStopPlay.TabIndex = 3;
-            buttonStopPlay.Text = "Stop";
-            buttonStopPlay.UseVisualStyleBackColor = true;
-            buttonStopPlay.Click += ButtonStopPlay_Click;
-            // 
             // pictureBoxLogo
             // 
             pictureBoxLogo.Image = Properties.Resources.Full;
-            pictureBoxLogo.Location = new Point(12, 33);
+            pictureBoxLogo.Location = new Point(36, 33);
             pictureBoxLogo.Name = "pictureBoxLogo";
             pictureBoxLogo.Size = new Size(177, 162);
             pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
@@ -107,11 +96,10 @@
             // 
             groupBoxControls.Controls.Add(buttonPlay);
             groupBoxControls.Controls.Add(buttonRecord);
-            groupBoxControls.Controls.Add(buttonStopRecord);
-            groupBoxControls.Controls.Add(buttonStopPlay);
+            groupBoxControls.Controls.Add(buttonStop);
             groupBoxControls.Location = new Point(12, 201);
             groupBoxControls.Name = "groupBoxControls";
-            groupBoxControls.Size = new Size(177, 129);
+            groupBoxControls.Size = new Size(228, 129);
             groupBoxControls.TabIndex = 6;
             groupBoxControls.TabStop = false;
             groupBoxControls.Text = "Controls";
@@ -119,12 +107,12 @@
             // groupBoxHistory
             // 
             groupBoxHistory.Controls.Add(listViewHistory);
-            groupBoxHistory.Location = new Point(195, 23);
+            groupBoxHistory.Location = new Point(246, 27);
             groupBoxHistory.Name = "groupBoxHistory";
-            groupBoxHistory.Size = new Size(383, 307);
+            groupBoxHistory.Size = new Size(386, 307);
             groupBoxHistory.TabIndex = 7;
             groupBoxHistory.TabStop = false;
-            groupBoxHistory.Text = "History";
+            groupBoxHistory.Text = "Recordings";
             // 
             // listViewHistory
             // 
@@ -156,7 +144,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, settingsToolStripMenuItem, helpToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(587, 24);
+            menuStrip1.Size = new Size(643, 24);
             menuStrip1.TabIndex = 8;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -170,7 +158,7 @@
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(93, 22);
+            exitToolStripMenuItem.Size = new Size(92, 22);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += ExitToolStripMenuItem_Click;
             // 
@@ -208,7 +196,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(587, 347);
+            ClientSize = new Size(643, 346);
             Controls.Add(groupBoxHistory);
             Controls.Add(groupBoxControls);
             Controls.Add(pictureBoxLogo);
@@ -233,9 +221,8 @@
         #endregion
 
         private Button buttonRecord;
-        private Button buttonStopRecord;
+        private Button buttonStop;
         private Button buttonPlay;
-        private Button buttonStopPlay;
         private PictureBox pictureBoxLogo;
         private GroupBox groupBoxControls;
         private GroupBox groupBoxHistory;

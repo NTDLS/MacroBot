@@ -36,6 +36,8 @@ namespace MacroBot
             listViewHistory.MouseDown += ListViewHistory_MouseDown;
             listViewHistory.KeyUp += ListViewHistory_KeyUp;
 
+            InitializeGridContextMenu();
+
             LoadRecordings();
             ToggleFormVisualStates();
             _actionPlayer.OnStopped += ActionPlayer_OnStopped;
@@ -79,19 +81,70 @@ namespace MacroBot
             }
             else if (e.KeyCode == Keys.Delete)
             {
+                DeleteSelectedRecording();
+            }
+        }
+
+        private void DeleteSelectedRecording()
+        {
+            if (listViewHistory.SelectedItems.Count == 0)
+            {
+                return;
+            }
+
+            var item = listViewHistory.SelectedItems[0];
+
+            if (MessageBox.Show($"Delete the recording '{item.Text}'", "MacroBot", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
+                return;
+            }
+            listViewHistory.Items.Remove(item);
+
+            SaveRecordings();
+        }
+
+        private void InitializeGridContextMenu()
+        {
+            var renameMenuItem = new ToolStripMenuItem("Rename", null, (s, e) =>
+            {
                 if (listViewHistory.SelectedItems.Count > 0)
                 {
-                    var item = listViewHistory.SelectedItems[0];
-
-                    if (MessageBox.Show($"Delete the recording '{item.Text}'", "MacroBot", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-                    {
-                        return;
-                    }
-                    listViewHistory.Items.Remove(item);
-
-                    SaveRecordings();
+                    listViewHistory.SelectedItems[0].BeginEdit();
                 }
-            }
+            }) { ShortcutKeyDisplayString = "F2" };
+
+            var deleteMenuItem = new ToolStripMenuItem("Delete", null, (s, e) => DeleteSelectedRecording())
+            {
+                ShortcutKeyDisplayString = "Del"
+            };
+
+            var playMenuItem = new ToolStripMenuItem("Play", null, (s, e) =>
+            {
+                if (listViewHistory.SelectedItems.Count > 0)
+                {
+                    //Checking the item makes it the selected recording (the other items are unchecked).
+                    listViewHistory.SelectedItems[0].Checked = true;
+                    StartPlay();
+                }
+            });
+
+            var menu = new ContextMenuStrip();
+            menu.Items.AddRange([playMenuItem, new ToolStripSeparator(), renameMenuItem, deleteMenuItem]);
+
+            menu.Opening += (s, e) =>
+            {
+                //Only show the menu when right clicking a recording.
+                if (listViewHistory.SelectedItems.Count == 0)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+
+                //We cannot play while recording or already playing.
+                playMenuItem.Enabled = !_actionRecorder.IsRunning && !_actionPlayer.IsRunning;
+            };
+
+            listViewHistory.ContextMenuStrip = menu;
         }
 
         private void ListViewHistory_ItemChecked(object? sender, ItemCheckedEventArgs e)
@@ -162,16 +215,14 @@ namespace MacroBot
         private void ToggleFormVisualStates()
         {
             buttonRecord.BackColor = _actionRecorder.IsRunning ? Color.LightGreen : SystemColors.Control;
-            buttonStopRecord.BackColor = _actionRecorder.IsRunning ? Color.IndianRed : SystemColors.Control;
+            buttonStop.BackColor = _actionRecorder.IsRunning || _actionPlayer.IsRunning ? Color.IndianRed : SystemColors.Control;
 
             buttonPlay.BackColor = _actionPlayer.IsRunning ? Color.LightGreen : SystemColors.Control;
-            buttonStopPlay.BackColor = _actionPlayer.IsRunning ? Color.IndianRed : SystemColors.Control;
 
             buttonRecord.Enabled = !_actionRecorder.IsRunning && !_actionPlayer.IsRunning;
-            buttonStopRecord.Enabled = _actionRecorder.IsRunning;
+            buttonStop.Enabled = _actionRecorder.IsRunning || _actionPlayer.IsRunning;
 
             buttonPlay.Enabled = !_actionRecorder.IsRunning && !_actionPlayer.IsRunning;
-            buttonStopPlay.Enabled = _actionPlayer.IsRunning;
 
             if (Program.Settings.HideWhenMinimized && (_actionRecorder.IsRunning || _actionPlayer.IsRunning))
             {
@@ -292,9 +343,14 @@ namespace MacroBot
         }
 
         private void ButtonRecord_Click(object sender, EventArgs e) => StartRecord();
-        private void ButtonStopRecord_Click(object sender, EventArgs e) => StopRecord();
+        private void ButtonStop_Click(object sender, EventArgs e)
+        {
+            if (_actionRecorder.IsRunning)
+                StopRecord();
+            else if (_actionPlayer.IsRunning)
+                StopPlay();
+        }
         private void ButtonPlay_Click(object sender, EventArgs e) => StartPlay();
-        private void ButtonStopPlay_Click(object sender, EventArgs e) => StopPlay();
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
