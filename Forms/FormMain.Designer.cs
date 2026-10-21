@@ -34,11 +34,11 @@
             buttonStop = new Button();
             buttonPlay = new Button();
             pictureBoxLogo = new PictureBox();
-            groupBoxControls = new GroupBox();
             groupBoxHistory = new GroupBox();
             listViewHistory = new ListView();
             columnHeaderName = new ColumnHeader();
             columnHeaderDate = new ColumnHeader();
+            columnHeaderType = new ColumnHeader();
             menuStrip1 = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             exitToolStripMenuItem = new ToolStripMenuItem();
@@ -47,38 +47,34 @@
             aboutToolStripMenuItem = new ToolStripMenuItem();
             notifyIconMain = new NotifyIcon(components);
             ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).BeginInit();
-            groupBoxControls.SuspendLayout();
             groupBoxHistory.SuspendLayout();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // buttonRecord
             // 
-            buttonRecord.Location = new Point(6, 32);
+            buttonRecord.Location = new Point(100, 218);
             buttonRecord.Name = "buttonRecord";
-            buttonRecord.Size = new Size(100, 27);
-            buttonRecord.TabIndex = 0;
-            buttonRecord.Text = "Record";
+            buttonRecord.Size = new Size(49, 46);
+            buttonRecord.TabIndex = 1;
             buttonRecord.UseVisualStyleBackColor = true;
             buttonRecord.Click += ButtonRecord_Click;
             // 
             // buttonStop
             // 
-            buttonStop.Location = new Point(115, 32);
+            buttonStop.Location = new Point(164, 218);
             buttonStop.Name = "buttonStop";
-            buttonStop.Size = new Size(100, 27);
-            buttonStop.TabIndex = 1;
-            buttonStop.Text = "Stop";
+            buttonStop.Size = new Size(49, 46);
+            buttonStop.TabIndex = 2;
             buttonStop.UseVisualStyleBackColor = true;
             buttonStop.Click += ButtonStop_Click;
             // 
             // buttonPlay
             // 
-            buttonPlay.Location = new Point(6, 78);
+            buttonPlay.Location = new Point(36, 218);
             buttonPlay.Name = "buttonPlay";
-            buttonPlay.Size = new Size(100, 27);
-            buttonPlay.TabIndex = 2;
-            buttonPlay.Text = "Play";
+            buttonPlay.Size = new Size(49, 46);
+            buttonPlay.TabIndex = 0;
             buttonPlay.UseVisualStyleBackColor = true;
             buttonPlay.Click += ButtonPlay_Click;
             // 
@@ -92,24 +88,12 @@
             pictureBoxLogo.TabIndex = 4;
             pictureBoxLogo.TabStop = false;
             // 
-            // groupBoxControls
-            // 
-            groupBoxControls.Controls.Add(buttonPlay);
-            groupBoxControls.Controls.Add(buttonRecord);
-            groupBoxControls.Controls.Add(buttonStop);
-            groupBoxControls.Location = new Point(12, 201);
-            groupBoxControls.Name = "groupBoxControls";
-            groupBoxControls.Size = new Size(228, 129);
-            groupBoxControls.TabIndex = 6;
-            groupBoxControls.TabStop = false;
-            groupBoxControls.Text = "Controls";
-            // 
             // groupBoxHistory
             // 
             groupBoxHistory.Controls.Add(listViewHistory);
             groupBoxHistory.Location = new Point(246, 27);
             groupBoxHistory.Name = "groupBoxHistory";
-            groupBoxHistory.Size = new Size(386, 307);
+            groupBoxHistory.Size = new Size(386, 237);
             groupBoxHistory.TabIndex = 7;
             groupBoxHistory.TabStop = false;
             groupBoxHistory.Text = "Recordings";
@@ -117,14 +101,14 @@
             // listViewHistory
             // 
             listViewHistory.CheckBoxes = true;
-            listViewHistory.Columns.AddRange(new ColumnHeader[] { columnHeaderName, columnHeaderDate });
+            listViewHistory.Columns.AddRange(new ColumnHeader[] { columnHeaderName, columnHeaderType, columnHeaderDate });
             listViewHistory.FullRowSelect = true;
             listViewHistory.GridLines = true;
             listViewHistory.LabelEdit = true;
-            listViewHistory.Location = new Point(6, 22);
+            listViewHistory.Location = new Point(9, 22);
             listViewHistory.MultiSelect = false;
             listViewHistory.Name = "listViewHistory";
-            listViewHistory.Size = new Size(371, 279);
+            listViewHistory.Size = new Size(371, 209);
             listViewHistory.TabIndex = 0;
             listViewHistory.UseCompatibleStateImageBehavior = false;
             listViewHistory.View = View.Details;
@@ -132,12 +116,17 @@
             // columnHeaderName
             // 
             columnHeaderName.Text = "Name";
-            columnHeaderName.Width = 200;
+            columnHeaderName.Width = 150;
+            // 
+            // columnHeaderType
+            // 
+            columnHeaderType.Text = "Type";
+            columnHeaderType.Width = 70;
             // 
             // columnHeaderDate
             // 
             columnHeaderDate.Text = "Date";
-            columnHeaderDate.Width = 140;
+            columnHeaderDate.Width = 130;
             // 
             // menuStrip1
             // 
@@ -196,9 +185,11 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(643, 346);
+            ClientSize = new Size(643, 282);
+            Controls.Add(buttonPlay);
             Controls.Add(groupBoxHistory);
-            Controls.Add(groupBoxControls);
+            Controls.Add(buttonRecord);
+            Controls.Add(buttonStop);
             Controls.Add(pictureBoxLogo);
             Controls.Add(menuStrip1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -210,7 +201,6 @@
             Text = "MacroBot";
             Load += FormMain_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).EndInit();
-            groupBoxControls.ResumeLayout(false);
             groupBoxHistory.ResumeLayout(false);
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
@@ -224,11 +214,11 @@
         private Button buttonStop;
         private Button buttonPlay;
         private PictureBox pictureBoxLogo;
-        private GroupBox groupBoxControls;
         private GroupBox groupBoxHistory;
         private ListView listViewHistory;
         private ColumnHeader columnHeaderName;
         private ColumnHeader columnHeaderDate;
+        private ColumnHeader columnHeaderType;
         private MenuStrip menuStrip1;
         private ToolStripMenuItem fileToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;

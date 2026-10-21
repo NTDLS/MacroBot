@@ -15,6 +15,7 @@ namespace MacroBot
         private readonly ActionRecorder _actionRecorder = new();
         private readonly ActionPlayer _actionPlayer = new();
         private bool _isGridPopulating = false;
+        private readonly ToolTip _toolTip = new();
 
         public FormMain()
         {
@@ -36,6 +37,7 @@ namespace MacroBot
             listViewHistory.MouseDown += ListViewHistory_MouseDown;
             listViewHistory.KeyUp += ListViewHistory_KeyUp;
 
+            InitializeButtonImages();
             InitializeGridContextMenu();
 
             LoadRecordings();
@@ -44,8 +46,27 @@ namespace MacroBot
 
             FormClosed += (object? sender, FormClosedEventArgs e) => SaveRecordings();
 
-            buttonPlay.Text = $"Play ({Program.Settings.PlayHotkey})";
-            buttonRecord.Text = $"Record ({Program.Settings.RecordHotkey})";
+            UpdateButtonHints();
+        }
+
+        private void InitializeButtonImages()
+        {
+            var size = (int)(40 * DeviceDpi / 96f);
+
+            buttonPlay.Image = ButtonIcons.Play(size);
+            buttonRecord.Image = ButtonIcons.Record(size);
+            buttonStop.Image = ButtonIcons.Stop(size);
+
+            buttonPlay.AccessibleName = "Play";
+            buttonRecord.AccessibleName = "Record";
+            buttonStop.AccessibleName = "Stop";
+        }
+
+        private void UpdateButtonHints()
+        {
+            _toolTip.SetToolTip(buttonPlay, $"Play ({Program.Settings.PlayHotkey})");
+            _toolTip.SetToolTip(buttonRecord, $"Record ({Program.Settings.RecordHotkey})");
+            _toolTip.SetToolTip(buttonStop, "Stop");
         }
 
         private void ListViewHistory_MouseDown(object? sender, MouseEventArgs e)
@@ -252,7 +273,7 @@ namespace MacroBot
                 Actions = _actionRecorder.Actions
             };
 
-            var item = new ListViewItem(new string[] { recording.Name, recording.SafeDateTimeName });
+            var item = new ListViewItem(new string[] { recording.Name, recording.MouseMode.ToString(), recording.SafeDateTimeName });
             listViewHistory.Items.Insert(0, item).Tag = recording;
             item.Checked = true;
 
@@ -306,7 +327,7 @@ namespace MacroBot
 
             foreach (var recording in recordings)
             {
-                var item = new ListViewItem([recording.Name, recording.SafeDateTimeName]);
+                var item = new ListViewItem([recording.Name, recording.MouseMode.ToString(), recording.SafeDateTimeName]);
                 listViewHistory.Items.Add(item).Tag = recording;
                 item.Checked = recording.Selected;
             }
@@ -369,8 +390,7 @@ namespace MacroBot
             using var form = new FormSettings();
             form.ShowDialog();
 
-            buttonPlay.Text = $"Play ({Program.Settings.PlayHotkey})";
-            buttonRecord.Text = $"Record ({Program.Settings.RecordHotkey})";
+            UpdateButtonHints();
             _isSettingsDialogOpen = false;
         }
 
