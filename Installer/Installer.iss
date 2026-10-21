@@ -27,7 +27,7 @@
  AppVersion      = {#ApplicationVersion}
 
 [Files]
- Source: "Publish\*.exe"; DestDir: "{app}"; Flags: IgnoreVersion;
+ Source: "Publish\*.*"; DestDir: "{app}"; Flags: IgnoreVersion recursesubdirs;
  
 ;---------------------------------------------------------------------
 
