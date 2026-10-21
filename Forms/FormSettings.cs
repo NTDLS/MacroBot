@@ -8,8 +8,10 @@ namespace MacroBot.Forms
         public FormSettings()
         {
             InitializeComponent();
+            Theming.InitializeApplication();
 
             checkBoxHideWhenMinimized.Checked = Program.Settings.HideWhenMinimized;
+            checkBoxRelativeMouse.Checked = Program.Settings.RelativeMouseMode;
 
             textBoxRecordHotkey.Text = Program.Settings.RecordHotkey.ToString();
             textBoxPlayHotkey.Text = Program.Settings.PlayHotkey.ToString();
@@ -18,6 +20,7 @@ namespace MacroBot.Forms
         private void buttonSave_Click(object sender, EventArgs e)
         {
             Program.Settings.HideWhenMinimized = checkBoxHideWhenMinimized.Checked;
+            Program.Settings.RelativeMouseMode = checkBoxRelativeMouse.Checked;
 
             try
             {

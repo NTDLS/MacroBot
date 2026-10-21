@@ -1,10 +1,13 @@
 ﻿using MacroBot.Win32;
+using System.Runtime.InteropServices;
 using static MacroBot.Win32.Extern;
 
 namespace MacroBot.Hooks
 {
     internal class MouseHook
     {
+        private const uint LLMHF_INJECTED = 0x01;
+
         private static readonly LowLevelMouseProc _proc = HookCallback;
         private static nint _hookID = nint.Zero;
 
@@ -12,58 +15,45 @@ namespace MacroBot.Hooks
 
         public static void Install(MouseEventInterceptor handlerProc)
         {
-            _hookID = SetHook(_proc);
             _handlerProc = handlerProc;
+            _hookID = SetHook(_proc);
         }
 
         public static void Remove()
         {
             UnhookWindowsHookEx(_hookID);
+            _hookID = nint.Zero;
+            _handlerProc = null;
         }
 
         private static nint HookCallback(int nCode, nint wParam, nint lParam)
         {
-            if (_handlerProc == null)
+            if (nCode >= 0 && _handlerProc != null)
             {
-                throw new Exception("The callback method has not been defined.");
-            }
+                var message = (MouseMessages)wParam;
 
-            if (nCode >= 0 && (MouseMessages.WM_LBUTTONDOWN == (MouseMessages)wParam
-                || MouseMessages.WM_RBUTTONDOWN == (MouseMessages)wParam
-                || MouseMessages.WM_LBUTTONUP == (MouseMessages)wParam
-                || MouseMessages.WM_RBUTTONUP == (MouseMessages)wParam))
-            {
-                if (GetCursorPos(out POINT cursorPos))
+                switch (message)
                 {
-                    ButtonDisposition direction;
+                    case MouseMessages.WM_MOUSEMOVE:
+                    case MouseMessages.WM_LBUTTONDOWN:
+                    case MouseMessages.WM_LBUTTONUP:
+                    case MouseMessages.WM_RBUTTONDOWN:
+                    case MouseMessages.WM_RBUTTONUP:
+                    case MouseMessages.WM_MBUTTONDOWN:
+                    case MouseMessages.WM_MBUTTONUP:
+                    case MouseMessages.WM_XBUTTONDOWN:
+                    case MouseMessages.WM_XBUTTONUP:
+                    case MouseMessages.WM_MOUSEWHEEL:
+                    case MouseMessages.WM_MOUSEHWHEEL:
+                        var info = Marshal.PtrToStructure<MSLLHOOKSTRUCT>(lParam);
 
-                    MouseButtons buttons;
-                    if (MouseMessages.WM_LBUTTONDOWN == (MouseMessages)wParam)
-                    {
-                        buttons = MouseButtons.Left;
-                        direction = ButtonDisposition.Down;
-                    }
-                    else if (MouseMessages.WM_RBUTTONDOWN == (MouseMessages)wParam)
-                    {
-                        buttons = MouseButtons.Right;
-                        direction = ButtonDisposition.Down;
-                    }
-                    else if (MouseMessages.WM_LBUTTONUP == (MouseMessages)wParam)
-                    {
-                        buttons = MouseButtons.Left;
-                        direction = ButtonDisposition.Up;
-                    }
-                    else if (MouseMessages.WM_RBUTTONUP == (MouseMessages)wParam)
-                    {
-                        buttons = MouseButtons.Right;
-                        direction = ButtonDisposition.Up;
-                    }
-                    else
-                    {
-                        return CallNextHookEx(_hookID, nCode, wParam, lParam);
-                    }
+                        //The high word of mouseData holds the wheel delta (signed) or the X button number.
+                        int data = message is MouseMessages.WM_MOUSEWHEEL or MouseMessages.WM_MOUSEHWHEEL
+                            ? (short)(info.mouseData >> 16)
+                            : (int)(info.mouseData >> 16);
 
-                    _handlerProc(new MouseEventArgs(buttons, 1, cursorPos.X, cursorPos.Y, 0), direction);
+                        _handlerProc(new MouseHookEvent(message, info.pt.X, info.pt.Y, data, (info.flags & LLMHF_INJECTED) != 0));
+                        break;
                 }
             }
             return CallNextHookEx(_hookID, nCode, wParam, lParam);

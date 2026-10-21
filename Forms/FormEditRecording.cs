@@ -1,6 +1,6 @@
 ﻿using MacroBot.Recording;
 using Newtonsoft.Json;
-
+using NTDLS.WinFormsHelpers;
 
 namespace MacroBot.Forms
 {
@@ -11,11 +11,13 @@ namespace MacroBot.Forms
         public FormEditRecording()
         {
             InitializeComponent();
+            Theming.InitializeApplication();
         }
 
         public FormEditRecording(PersistedRecording recording)
         {
             InitializeComponent();
+            Theming.InitializeApplication();
 
             Recording = recording;
 
@@ -32,8 +34,6 @@ namespace MacroBot.Forms
                 NullValueHandling = NullValueHandling.Ignore,
                 Formatting = Formatting.Indented,
             };
-
-            textBoxActions.Text = JsonConvert.SerializeObject(recording.Actions, settings);
         }
 
         private void ButtonCancel_Click(object sender, EventArgs e)
@@ -46,18 +46,6 @@ namespace MacroBot.Forms
         {
             if (Recording != null)
             {
-                List<RepeatableAction>? actions;
-
-                try
-                {
-                    actions = JsonConvert.DeserializeObject<List<RepeatableAction>>(textBoxActions.Text);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"The recording text is invalid: {ex.Message}", "MacroBot", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
                 if (!double.TryParse(textBoxSpeed.Text, out var speed))
                 {
                     speed = 1;
@@ -73,7 +61,7 @@ namespace MacroBot.Forms
                     repetitionDelay = 1000;
                 }
 
-                var newRecording = new PersistedRecording()
+                Recording = new PersistedRecording()
                 {
                     CreatedDate = Recording.CreatedDate,
                     Name = textBoxName.Text,
@@ -81,10 +69,8 @@ namespace MacroBot.Forms
                     Speed = speed,
                     Repetitions = repetitions,
                     RepetitionDelay = repetitionDelay,
-                    Actions = actions ?? new List<RepeatableAction>()
+                    Actions = Recording.Actions
                 };
-
-                Recording = newRecording;
 
                 DialogResult = DialogResult.OK;
                 Close();

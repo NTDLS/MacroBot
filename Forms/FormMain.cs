@@ -1,9 +1,12 @@
 using MacroBot.Forms;
 using MacroBot.Hooks;
+using MacroBot.Properties;
 using MacroBot.Recording;
 using MacroBot.Win32;
 using Newtonsoft.Json;
 using NTDLS.Persistence;
+using NTDLS.WinFormsHelpers;
+using NTDLS.WinFormsHelpers.Forms;
 
 namespace MacroBot
 {
@@ -17,6 +20,7 @@ namespace MacroBot
         public FormMain()
         {
             InitializeComponent();
+            Theming.InitializeApplication();
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -118,12 +122,16 @@ namespace MacroBot
             ToggleFormVisualStates();
         }
 
-        private void KeyboardHook_OnKeyboardEventInterceptor(Keys key, ButtonDisposition keyboardButtonDirection)
+        private void KeyboardHook_OnKeyboardEventInterceptor(KeyboardHookEvent e)
         {
-            if (_isSettingsDialogOpen)
+            //Input injected by a playing macro must never trigger the hotkeys.
+            if (_isSettingsDialogOpen || e.Injected)
             {
                 return;
             }
+
+            var key = e.Key;
+            var keyboardButtonDirection = e.Disposition;
 
             if (key == Enum.Parse<Keys>(Program.Settings.RecordHotkey) && keyboardButtonDirection == ButtonDisposition.Up)
             {
@@ -178,7 +186,7 @@ namespace MacroBot
 
         private void StartRecord()
         {
-            _actionRecorder.Start();
+            _actionRecorder.Start(Program.Settings.RelativeMouseMode);
             ToggleFormVisualStates();
         }
 
@@ -281,7 +289,7 @@ namespace MacroBot
 
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using var form = new FormAbout();
+            using var form = new FormAbout("MacroBot", this.Icon, Resources.Logo128);
             form.ShowDialog();
         }
 

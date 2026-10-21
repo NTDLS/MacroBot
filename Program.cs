@@ -1,5 +1,6 @@
 using MacroBot.Hooks;
 using NTDLS.Persistence;
+using NTDLS.WinFormsHelpers;
 
 namespace MacroBot
 {
@@ -11,6 +12,8 @@ namespace MacroBot
         static void Main()
         {
             var mutex = new Mutex(true, "MacroBot", out bool createdNew);
+
+            Theming.InitializeApplication();
 
             try
             {

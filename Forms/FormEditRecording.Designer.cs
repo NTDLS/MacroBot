@@ -31,8 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEditRecording));
             labelName = new Label();
             labelSpeed = new Label();
-            labelActions = new Label();
-            textBoxActions = new TextBox();
             textBoxName = new TextBox();
             textBoxSpeed = new TextBox();
             buttonSave = new Button();
@@ -46,7 +44,7 @@
             // labelName
             // 
             labelName.AutoSize = true;
-            labelName.Location = new Point(11, 15);
+            labelName.Location = new Point(9, 15);
             labelName.Name = "labelName";
             labelName.Size = new Size(39, 15);
             labelName.TabIndex = 0;
@@ -55,77 +53,57 @@
             // labelSpeed
             // 
             labelSpeed.AutoSize = true;
-            labelSpeed.Location = new Point(12, 54);
+            labelSpeed.Location = new Point(10, 61);
             labelSpeed.Name = "labelSpeed";
             labelSpeed.Size = new Size(39, 15);
             labelSpeed.TabIndex = 1;
             labelSpeed.Text = "Speed";
             // 
-            // labelActions
-            // 
-            labelActions.AutoSize = true;
-            labelActions.Location = new Point(12, 97);
-            labelActions.Name = "labelActions";
-            labelActions.Size = new Size(47, 15);
-            labelActions.TabIndex = 2;
-            labelActions.Text = "Actions";
-            // 
-            // textBoxActions
-            // 
-            textBoxActions.AcceptsTab = true;
-            textBoxActions.Location = new Point(12, 115);
-            textBoxActions.Multiline = true;
-            textBoxActions.Name = "textBoxActions";
-            textBoxActions.ScrollBars = ScrollBars.Both;
-            textBoxActions.Size = new Size(357, 323);
-            textBoxActions.TabIndex = 2;
-            textBoxActions.WordWrap = false;
-            // 
             // textBoxName
             // 
-            textBoxName.Location = new Point(55, 12);
+            textBoxName.Location = new Point(12, 33);
             textBoxName.Name = "textBoxName";
             textBoxName.Size = new Size(100, 23);
             textBoxName.TabIndex = 0;
             // 
             // textBoxSpeed
             // 
-            textBoxSpeed.Location = new Point(55, 51);
+            textBoxSpeed.Location = new Point(12, 79);
             textBoxSpeed.Name = "textBoxSpeed";
             textBoxSpeed.Size = new Size(100, 23);
-            textBoxSpeed.TabIndex = 1;
+            textBoxSpeed.TabIndex = 2;
             // 
             // buttonSave
             // 
-            buttonSave.Location = new Point(213, 450);
+            buttonSave.Location = new Point(82, 114);
             buttonSave.Name = "buttonSave";
             buttonSave.Size = new Size(75, 23);
-            buttonSave.TabIndex = 3;
+            buttonSave.TabIndex = 4;
             buttonSave.Text = "Save";
             buttonSave.UseVisualStyleBackColor = true;
             buttonSave.Click += ButtonSave_Click;
             // 
             // buttonCancel
             // 
-            buttonCancel.Location = new Point(294, 450);
+            buttonCancel.Location = new Point(163, 114);
             buttonCancel.Name = "buttonCancel";
             buttonCancel.Size = new Size(75, 23);
-            buttonCancel.TabIndex = 4;
+            buttonCancel.TabIndex = 5;
             buttonCancel.Text = "Cancel";
             buttonCancel.UseVisualStyleBackColor = true;
             buttonCancel.Click += ButtonCancel_Click;
             // 
             // textBoxRepetitions
             // 
-            textBoxRepetitions.Location = new Point(269, 12);
+            textBoxRepetitions.Location = new Point(138, 33);
             textBoxRepetitions.Name = "textBoxRepetitions";
             textBoxRepetitions.Size = new Size(100, 23);
-            textBoxRepetitions.TabIndex = 5;
+            textBoxRepetitions.TabIndex = 1;
             // 
             // labelRepetitions
             // 
             labelRepetitions.AutoSize = true;
-            labelRepetitions.Location = new Point(194, 15);
+            labelRepetitions.Location = new Point(136, 15);
             labelRepetitions.Name = "labelRepetitions";
             labelRepetitions.Size = new Size(66, 15);
             labelRepetitions.TabIndex = 6;
@@ -133,15 +111,15 @@
             // 
             // textBoxRepetitionDelay
             // 
-            textBoxRepetitionDelay.Location = new Point(269, 51);
+            textBoxRepetitionDelay.Location = new Point(138, 79);
             textBoxRepetitionDelay.Name = "textBoxRepetitionDelay";
             textBoxRepetitionDelay.Size = new Size(100, 23);
-            textBoxRepetitionDelay.TabIndex = 7;
+            textBoxRepetitionDelay.TabIndex = 3;
             // 
             // labelRepetitionDelay
             // 
             labelRepetitionDelay.AutoSize = true;
-            labelRepetitionDelay.Location = new Point(170, 54);
+            labelRepetitionDelay.Location = new Point(136, 61);
             labelRepetitionDelay.Name = "labelRepetitionDelay";
             labelRepetitionDelay.Size = new Size(93, 15);
             labelRepetitionDelay.TabIndex = 8;
@@ -151,7 +129,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(388, 485);
+            ClientSize = new Size(253, 149);
             Controls.Add(textBoxRepetitionDelay);
             Controls.Add(labelRepetitionDelay);
             Controls.Add(textBoxRepetitions);
@@ -160,8 +138,6 @@
             Controls.Add(buttonSave);
             Controls.Add(textBoxSpeed);
             Controls.Add(textBoxName);
-            Controls.Add(textBoxActions);
-            Controls.Add(labelActions);
             Controls.Add(labelSpeed);
             Controls.Add(labelName);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -180,8 +156,6 @@
 
         private Label labelName;
         private Label labelSpeed;
-        private Label labelActions;
-        private TextBox textBoxActions;
         private TextBox textBoxName;
         private TextBox textBoxSpeed;
         private Button buttonSave;

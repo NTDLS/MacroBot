@@ -36,11 +36,12 @@
             textBoxRecordHotkey = new TextBox();
             textBoxPlayHotkey = new TextBox();
             buttonCancel = new Button();
+            checkBoxRelativeMouse = new CheckBox();
             SuspendLayout();
             // 
             // buttonSave
             // 
-            buttonSave.Location = new Point(265, 146);
+            buttonSave.Location = new Point(143, 170);
             buttonSave.Margin = new Padding(4, 3, 4, 3);
             buttonSave.Name = "buttonSave";
             buttonSave.Size = new Size(88, 27);
@@ -52,7 +53,7 @@
             // checkBoxHideWhenMinimized
             // 
             checkBoxHideWhenMinimized.AutoSize = true;
-            checkBoxHideWhenMinimized.Location = new Point(106, 97);
+            checkBoxHideWhenMinimized.Location = new Point(14, 107);
             checkBoxHideWhenMinimized.Name = "checkBoxHideWhenMinimized";
             checkBoxHideWhenMinimized.Size = new Size(198, 19);
             checkBoxHideWhenMinimized.TabIndex = 8;
@@ -62,7 +63,7 @@
             // labelPlayHotkey
             // 
             labelPlayHotkey.AutoSize = true;
-            labelPlayHotkey.Location = new Point(27, 55);
+            labelPlayHotkey.Location = new Point(12, 55);
             labelPlayHotkey.Name = "labelPlayHotkey";
             labelPlayHotkey.Size = new Size(73, 15);
             labelPlayHotkey.TabIndex = 9;
@@ -71,7 +72,7 @@
             // labelRecordHotkey
             // 
             labelRecordHotkey.AutoSize = true;
-            labelRecordHotkey.Location = new Point(12, 26);
+            labelRecordHotkey.Location = new Point(12, 9);
             labelRecordHotkey.Name = "labelRecordHotkey";
             labelRecordHotkey.Size = new Size(88, 15);
             labelRecordHotkey.TabIndex = 10;
@@ -79,7 +80,7 @@
             // 
             // textBoxRecordHotkey
             // 
-            textBoxRecordHotkey.Location = new Point(106, 23);
+            textBoxRecordHotkey.Location = new Point(14, 27);
             textBoxRecordHotkey.Name = "textBoxRecordHotkey";
             textBoxRecordHotkey.Size = new Size(100, 23);
             textBoxRecordHotkey.TabIndex = 11;
@@ -87,7 +88,7 @@
             // 
             // textBoxPlayHotkey
             // 
-            textBoxPlayHotkey.Location = new Point(106, 52);
+            textBoxPlayHotkey.Location = new Point(14, 73);
             textBoxPlayHotkey.Name = "textBoxPlayHotkey";
             textBoxPlayHotkey.Size = new Size(100, 23);
             textBoxPlayHotkey.TabIndex = 12;
@@ -95,7 +96,7 @@
             // 
             // buttonCancel
             // 
-            buttonCancel.Location = new Point(169, 146);
+            buttonCancel.Location = new Point(47, 170);
             buttonCancel.Margin = new Padding(4, 3, 4, 3);
             buttonCancel.Name = "buttonCancel";
             buttonCancel.Size = new Size(88, 27);
@@ -104,11 +105,22 @@
             buttonCancel.UseVisualStyleBackColor = true;
             buttonCancel.Click += buttonCancel_Click;
             // 
+            // checkBoxRelativeMouse
+            // 
+            checkBoxRelativeMouse.AutoSize = true;
+            checkBoxRelativeMouse.Location = new Point(14, 132);
+            checkBoxRelativeMouse.Name = "checkBoxRelativeMouse";
+            checkBoxRelativeMouse.Size = new Size(217, 19);
+            checkBoxRelativeMouse.TabIndex = 14;
+            checkBoxRelativeMouse.Text = "Relative mouse (for 3D games / FPS)";
+            checkBoxRelativeMouse.UseVisualStyleBackColor = true;
+            // 
             // FormSettings
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(366, 185);
+            ClientSize = new Size(256, 207);
+            Controls.Add(checkBoxRelativeMouse);
             Controls.Add(buttonCancel);
             Controls.Add(textBoxPlayHotkey);
             Controls.Add(textBoxRecordHotkey);
@@ -140,5 +152,6 @@
         private TextBox textBoxRecordHotkey;
         private TextBox textBoxPlayHotkey;
         private Button buttonCancel;
+        private CheckBox checkBoxRelativeMouse;
     }
 }
