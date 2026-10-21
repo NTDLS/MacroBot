@@ -3,7 +3,6 @@ using MacroBot.Hooks;
 using MacroBot.Properties;
 using MacroBot.Recording;
 using MacroBot.Win32;
-using Newtonsoft.Json;
 using NTDLS.Persistence;
 using NTDLS.WinFormsHelpers;
 using NTDLS.WinFormsHelpers.Forms;
@@ -12,7 +11,7 @@ namespace MacroBot
 {
     public partial class FormMain : Form
     {
-        private bool _isSettingsDialogOpen { get; set; }
+        private bool _isSettingsDialogOpen;
         private readonly ActionRecorder _actionRecorder = new();
         private readonly ActionPlayer _actionPlayer = new();
         private bool _isGridPopulating = false;
@@ -198,6 +197,7 @@ namespace MacroBot
             {
                 Name = $"Recording {(listViewHistory.Items.Count + 1):n0}",
                 CreatedDate = DateTime.Now,
+                MouseMode = _actionRecorder.MouseMode,
                 Actions = _actionRecorder.Actions
             };
 
@@ -225,23 +225,37 @@ namespace MacroBot
                 }
             }
 
-            var settings = new JsonSerializerSettings
+            var options = new PersistenceOptions
             {
-                NullValueHandling = NullValueHandling.Ignore,
-                Formatting = Formatting.Indented,
+                Compression = new RmDeflateCompressionProvider()
             };
 
-            LocalUserApplicationData.SaveToDisk("MacroBot", recordings, settings);
+            LocalUserApplicationData.SaveToDisk("MacroBot", recordings, options);
         }
 
         private void LoadRecordings()
         {
+            var options = new PersistenceOptions
+            {
+                Compression = new RmDeflateCompressionProvider()
+            };
+
             _isGridPopulating = true;
-            var recordings = LocalUserApplicationData.LoadFromDisk("MacroBot", new List<PersistedRecording>());
+            List<PersistedRecording> recordings;
+
+            try
+            {
+                var df = LocalUserApplicationData.Path("MacroBot");
+                recordings = LocalUserApplicationData.LoadFromDisk("MacroBot", new List<PersistedRecording>(), options);
+            }
+            catch
+            {
+                recordings = new List<PersistedRecording>();
+            }
 
             foreach (var recording in recordings)
             {
-                var item = new ListViewItem(new string[] { recording.Name, recording.SafeDateTimeName });
+                var item = new ListViewItem([recording.Name, recording.SafeDateTimeName]);
                 listViewHistory.Items.Add(item).Tag = recording;
                 item.Checked = recording.Selected;
             }
@@ -293,7 +307,7 @@ namespace MacroBot
             form.ShowDialog();
         }
 
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _isSettingsDialogOpen = true;
             using var form = new FormSettings();
@@ -304,7 +318,7 @@ namespace MacroBot
             _isSettingsDialogOpen = false;
         }
 
-        private void notifyIconMain_MouseClick(object sender, MouseEventArgs e)
+        private void NotifyIconMain_MouseClick(object sender, MouseEventArgs e)
         {
             this.Show();
         }

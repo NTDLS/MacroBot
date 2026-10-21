@@ -1,5 +1,4 @@
 ﻿using MacroBot.Recording;
-using Newtonsoft.Json;
 using NTDLS.WinFormsHelpers;
 
 namespace MacroBot.Forms
@@ -28,12 +27,6 @@ namespace MacroBot.Forms
             textBoxSpeed.Text = recording.Speed.ToString();
             textBoxRepetitions.Text = recording.Repetitions.ToString();
             textBoxRepetitionDelay.Text = recording.RepetitionDelay.ToString();
-
-            var settings = new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore,
-                Formatting = Formatting.Indented,
-            };
         }
 
         private void ButtonCancel_Click(object sender, EventArgs e)
@@ -66,6 +59,7 @@ namespace MacroBot.Forms
                     CreatedDate = Recording.CreatedDate,
                     Name = textBoxName.Text,
                     Selected = Recording.Selected,
+                    MouseMode = Recording.MouseMode,
                     Speed = speed,
                     Repetitions = repetitions,
                     RepetitionDelay = repetitionDelay,

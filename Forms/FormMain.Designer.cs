@@ -179,7 +179,7 @@
             settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             settingsToolStripMenuItem.Size = new Size(61, 20);
             settingsToolStripMenuItem.Text = "Settings";
-            settingsToolStripMenuItem.Click += settingsToolStripMenuItem_Click;
+            settingsToolStripMenuItem.Click += SettingsToolStripMenuItem_Click;
             // 
             // helpToolStripMenuItem
             // 
@@ -202,7 +202,7 @@
             notifyIconMain.Icon = (Icon)resources.GetObject("notifyIconMain.Icon");
             notifyIconMain.Text = "MacroBot";
             notifyIconMain.Visible = true;
-            notifyIconMain.MouseClick += notifyIconMain_MouseClick;
+            notifyIconMain.MouseClick += NotifyIconMain_MouseClick;
             // 
             // FormMain
             // 

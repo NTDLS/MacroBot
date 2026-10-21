@@ -34,6 +34,11 @@ namespace MacroBot.Recording
         public bool IsRunning { get; private set; }
 
         /// <summary>
+        /// The mouse mode actually used by the last recording (relative falls back to absolute if Raw Input is unavailable).
+        /// </summary>
+        public MouseModes MouseMode => _relativeMouse ? MouseModes.Relative : MouseModes.Absolute;
+
+        /// <summary>
         /// Starts recording.
         /// </summary>
         /// <param name="relativeMouse">Record relative mouse movement (Raw Input) instead of absolute cursor positions.
