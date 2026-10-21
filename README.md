@@ -1,7 +1,7 @@
 # MacroBot
 Keyboard and mouse macro recorder and player for Windows.
 
-Just a simple macro recorder and player for windows that allows you to capture and save mouse and keyboard interactions and then play them back at different speeds
+Just a simple macro recorder and player for windows that allows you to capture and save mouse and keyboard interactions and then play them back at different speeds with optional looping.
 - Default toggle record hotkey F6.
 - Default toggle play hotkey F7.
 
